@@ -1,3 +1,6 @@
+variables:
+  group: devops-dev
+
 pool:
   vmImage: ubuntu-22.04
 
@@ -12,8 +15,10 @@ stages:
   - template: ./templates/plan.yml
     parameters:
       tf_creds: credentials.tfrc.json
-      workspace: pg
-#
-#  - template: ./templates/apply.yml
-#    parameters:
-#      tf_creds: 'credentials.tfrc.json'
+      tf_workspace: pg
+
+  - template: ./templates/apply.yml
+    parameters:
+      tf_creds: credentials.tfrc.json
+      tf_workspace: pg
+      environment: $(environment)
