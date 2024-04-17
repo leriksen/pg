@@ -28,9 +28,8 @@ stages:
             displayName: terraform plan
             name: plan # needed for result later
             inputs:
-              scriptType: bash
-              scriptLocation: inlineScript
-              inlineScript: |
+              targetType: inline
+              script: |
                 terraform plan
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
             env:
