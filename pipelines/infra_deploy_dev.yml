@@ -1,9 +1,3 @@
-variables:
-  - group: terraform-base
-  - group: devops-base
-  - group: devops-non-prod
-  - group: devops-dev
-
 pool:
   vmImage: ubuntu-22.04
 
@@ -17,14 +11,8 @@ trigger:
 stages:
   - template: ./templates/plan.yml
     parameters:
-      environment:        $(environment)
-      project:            $(project)
-      subscription_id:    $(subscription_id)
       tf_creds:           'credentials.tfrc.json'
 
   - template: ./templates/apply.yml
     parameters:
-      environment:        $(environment)
-      project:            $(project)
-      subscription_id:    $(subscription_id)
       tf_creds:           'credentials.tfrc.json'

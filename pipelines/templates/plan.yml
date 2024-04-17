@@ -1,7 +1,4 @@
 parameters:
-  - name: project
-  - name: environment
-  - name: subscription_id
   - name: tf_creds
 
 stages:
