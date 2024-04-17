@@ -16,10 +16,11 @@ stages:
               secureFile: ${{ parameters.tf_creds }}
           - bash: |
               echo $(tf_creds.secureFilePath)
+              ls -al $(tf_creds.secureFilePath)
 
           - task: CopyFiles@2
             inputs:
-              sourceFolder: $(tf_creds.secureFilePath)
+              sourceFolder: $(Agent.TempDirectory)
               contents: "credentials.tfrc.json"
               targetFolder: "~/.terraform.d"
 
