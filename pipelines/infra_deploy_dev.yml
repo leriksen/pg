@@ -20,6 +20,7 @@ stages:
       environment:        $(environment)
       project:            $(project)
       subscription_id:    $(subscription_id)
+      tf_creds:           'credentials.tfrc.json'
 
   - template: ./templates/apply.yml
     parameters:
