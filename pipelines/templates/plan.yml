@@ -30,7 +30,8 @@ stages:
             inputs:
               scriptType: bash
               scriptLocation: inlineScript
-              inlineScript: terraform plan
+              inlineScript: |
+                terraform plan
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
             env:
               TF_IN_AUTOMATION: true
