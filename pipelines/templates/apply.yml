@@ -1,22 +1,22 @@
-parameters:
-  - name: tf_creds
-
-stages:
-  - stage: terraform_apply
-    displayName: Terraform Apply
-    # note the syntax for conditions is different to setting variables
-    # https://learn.microsoft.com/en-us/azure/devops/pipelines/process/deployment-jobs?view=azure-devops
-    condition: and(succeeded(), eq(dependencies.terraform_plan.outputs['terraform_plan.plan.result'], 'changed'))
-    jobs:
-      - deployment: terraform_apply
-        displayName: Terraform Apply
-        workspace:
-          clean: all
-        environment: ${{ parameters.environment }}
-        strategy:
-          runOnce:
-            deploy:
-              steps: []
+#parameters:
+#  - name: tf_creds
+#
+#stages:
+#  - stage: terraform_apply
+#    displayName: Terraform Apply
+#    # note the syntax for conditions is different to setting variables
+#    # https://learn.microsoft.com/en-us/azure/devops/pipelines/process/deployment-jobs?view=azure-devops
+#    condition: and(succeeded(), eq(dependencies.terraform_plan.outputs['terraform_plan.plan.result'], 'changed'))
+#    jobs:
+#      - deployment: terraform_apply
+#        displayName: Terraform Apply
+#        workspace:
+#          clean: all
+#        environment: ${{ parameters.environment }}
+#        strategy:
+#          runOnce:
+#            deploy:
+#              steps:
 #                - checkout: self
 #
 #                - task: DownloadSecureFile@1
