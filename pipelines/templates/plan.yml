@@ -19,6 +19,7 @@ stages:
           - bash: |
               echo $(tf_creds.secureFilePath)
               ls -al $(tf_creds.secureFilePath)
+              ls -al $(Agent.TempDirectory)
 
           - task: CopyFiles@2
             inputs:
