@@ -16,10 +16,9 @@ stages:
             name: tf_creds
             inputs:
               secureFile: ${{ parameters.tf_creds }}
+
           - bash: |
-              echo $(tf_creds.secureFilePath)
-              ls -al $(tf_creds.secureFilePath)
-              ls -al $(Agent.TempDirectory)
+              mkdir -p ~/.terraform.d
 
           - task: CopyFiles@2
             inputs:
