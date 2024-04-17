@@ -25,12 +25,22 @@ stages:
               targetFolder: "~/.terraform.d"
 
           - task: Bash@3
+            displayName: terraform init
+            inputs:
+              targetType: inline
+              script: |
+                terraform init
+              workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+            env:
+              TF_IN_AUTOMATION: true
+
+          - task: Bash@3
             displayName: terraform plan
             name: plan # needed for result later
             inputs:
               targetType: inline
               script: |
-                terraform plan
+                terraform plan -out tfplan.tfout
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
             env:
               TF_IN_AUTOMATION: true
