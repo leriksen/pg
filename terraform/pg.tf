@@ -8,7 +8,7 @@ resource "azurerm_postgresql_flexible_server" "pg" {
   administrator_password = "H@Sh1CoR3!"
 }
 
-resource "azurerm_postgresql_flexible_server_database" "example" {
+resource "azurerm_postgresql_flexible_server_database" "db" {
   name      = "db"
   server_id = azurerm_postgresql_flexible_server.pg.id
 }
