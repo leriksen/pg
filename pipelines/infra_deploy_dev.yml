@@ -1,5 +1,5 @@
 variables:
-  group: devops-dev
+  - group: devops-dev
 
 pool:
   vmImage: ubuntu-22.04
