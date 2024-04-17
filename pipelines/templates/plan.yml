@@ -24,7 +24,7 @@ stages:
           - task: CopyFiles@2
             inputs:
               sourceFolder: $(Agent.TempDirectory)
-              contents: "credentials.tfrc.json"
+              contents: ${{ parameters.tf_creds }}
               targetFolder: "~/.terraform.d"
 
           - bash: |
