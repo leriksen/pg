@@ -1,4 +1,4 @@
-resource "azurerm_postgresql_flexible_server" "example" {
+resource "azurerm_postgresql_flexible_server" "pg" {
   name                   = "leifpg"
   resource_group_name    = azurerm_resource_group.pg.name
   location               = azurerm_resource_group.pg.location
@@ -6,4 +6,9 @@ resource "azurerm_postgresql_flexible_server" "example" {
   version                = module.global.pg_version
   administrator_login    = "psqladmin"
   administrator_password = "H@Sh1CoR3!"
+}
+
+resource "azurerm_postgresql_flexible_server_database" "example" {
+  name      = "db"
+  server_id = azurerm_postgresql_flexible_server.pg.id
 }
