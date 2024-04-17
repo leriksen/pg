@@ -1,5 +1,6 @@
 parameters:
   - name: tf_creds
+  - name: workspace
 
 stages:
   - stage: terraform_plan
@@ -33,6 +34,7 @@ stages:
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
             env:
               TF_IN_AUTOMATION: true
+              TF_WORKSPACE: ${{ parameters.workspace }}
 
           - task: Bash@3
             displayName: terraform plan
@@ -44,3 +46,4 @@ stages:
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
             env:
               TF_IN_AUTOMATION: true
+              TF_WORKSPACE: ${{ parameters.workspace }}

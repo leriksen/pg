@@ -11,7 +11,8 @@ trigger:
 stages:
   - template: ./templates/plan.yml
     parameters:
-      tf_creds: 'credentials.tfrc.json'
+      tf_creds: credentials.tfrc.json
+      workspace: pg
 #
 #  - template: ./templates/apply.yml
 #    parameters:
