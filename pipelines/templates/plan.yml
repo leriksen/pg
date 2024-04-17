@@ -2,6 +2,7 @@ parameters:
   - name: project
   - name: environment
   - name: subscription_id
+  - name: tf_creds
 
 stages:
   - stage: terraform_plan
@@ -13,15 +14,17 @@ stages:
           clean: all
         steps:
           - task: DownloadSecureFile@1
-            name: idfile
+            name: tf_creds
             inputs:
-              secureFile: ${{ parameters.id_file }}
+              secureFile: ${{ parameters.tf_creds }}
+          - bash: |
+              echo $(tf_creds.secureFilePath)
 
-          - task: CopyFiles@2
-            inputs:
-              sourceFolder: $(idfile.secureFilePath)
-              contents: "credentials.tfrc.json"
-              targetFolder: "~/.terraform.d"
+#          - task: CopyFiles@2
+#            inputs:
+#              sourceFolder: $(tf_creds.secureFilePath)
+#              contents: "credentials.tfrc.json"
+#              targetFolder: "~/.terraform.d"
 
 #          - task: Bash@3
 #            displayName: terraform init
