@@ -10,8 +10,6 @@ stages:
         workspace:
           clean: all
         steps:
-          - checkout: none
-
           - task: DownloadSecureFile@1
             name: tf_creds
             inputs:
@@ -26,6 +24,13 @@ stages:
               contents: ${{ parameters.tf_creds }}
               targetFolder: "~/.terraform.d"
 
-          - bash: |
-              ls -al ~
-              ls -al ~/.terraform.d
+          - task: Bash@3
+            displayName: terraform plan
+            name: plan # needed for result later
+            inputs:
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: terraform plan
+              workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+            env:
+              TF_IN_AUTOMATION: true
