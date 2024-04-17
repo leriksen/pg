@@ -17,3 +17,12 @@ stages:
           - bash: |
               echo $(tf_creds.secureFilePath)
 
+          - task: CopyFiles@2
+            inputs:
+              sourceFolder: $(tf_creds.secureFilePath)
+              contents: "credentials.tfrc.json"
+              targetFolder: "~/.terraform.d"
+
+          - bash: |
+              ls -al ~
+              ls -al ~/.terraform.d
