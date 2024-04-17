@@ -28,9 +28,8 @@ stages:
           - task: Bash@3
             displayName: terraform init
             inputs:
-              targetType: inline
-              script: |
-                terraform init
+              targetType: filePath
+              filePath: scripts/terraform_init.sh
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
             env:
               TF_IN_AUTOMATION: true
@@ -40,10 +39,27 @@ stages:
             displayName: terraform plan
             name: plan # needed for result later
             inputs:
-              targetType: inline
-              script: |
-                terraform plan -out tfplan.tfout
+              targetType: filePath
+              filePath: scripts/terraform_plan.sh
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+              arguments: >
+                -out tfplan.tfout
             env:
               TF_IN_AUTOMATION: true
               TF_WORKSPACE: ${{ parameters.workspace }}
+
+          - task: CopyFiles@2
+            displayName: stage tf plan output file to $(Build.StagingDirectory)
+            condition: and(succeeded(), eq(variables['plan.result'], 'changed'))
+            inputs:
+              sourceFolder: $(System.DefaultWorkingDirectory)
+              contents: |
+                terraform/tfplan.tfout
+              targetFolder: $(Build.StagingDirectory)
+              cleanTargetFolder: true
+
+          - task: PublishBuildArtifacts@1
+            displayName: upload tf artifact
+            condition: and(succeeded(), eq(variables['plan.result'], 'changed'))
+            inputs:
+              artifactName: terraform-plan
