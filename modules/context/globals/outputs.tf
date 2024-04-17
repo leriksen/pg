@@ -9,9 +9,6 @@ output "tags" {
 output location {
   value = "australiasoutheast"
 }
-
-output "ado_control_ports" {
-  value = [
-    "22",  # SSH
-  ]
+output "pg_version" {
+  value = "12"
 }

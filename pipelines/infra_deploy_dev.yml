@@ -17,20 +17,12 @@ trigger:
 stages:
   - template: ./templates/plan.yml
     parameters:
-      sa:                 $(sa)
-      container:          $(container)
-      service_connection: $(service_connection)
       environment:        $(environment)
       project:            $(project)
       subscription_id:    $(subscription_id)
-      id_file:            id_rsa.pub
 
   - template: ./templates/apply.yml
     parameters:
-      sa:                 $(sa)
-      container:          $(container)
-      service_connection: $(service_connection)
       environment:        $(environment)
       project:            $(project)
       subscription_id:    $(subscription_id)
-      id_file:            id_rsa.pub
