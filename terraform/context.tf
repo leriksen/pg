@@ -1,6 +1,6 @@
 module "environment" {
   source      = "../modules/context/environment"
-  environment = "dev"
+  environment = var.environment
 }
 
 module "subscription" {
