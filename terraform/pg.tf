@@ -4,8 +4,8 @@ resource "azurerm_postgresql_flexible_server" "pg" {
   location               = azurerm_resource_group.pg.location
   sku_name               = module.environment.pg_sku_name
   version                = module.global.pg_version
-  administrator_login    = "psqladmin"
-  administrator_password = "H@Sh1CoR3!"
+  administrator_login    = var.pguser
+  administrator_password = var.pgpassword
 }
 
 resource "azurerm_postgresql_flexible_server_database" "db" {

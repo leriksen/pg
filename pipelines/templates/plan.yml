@@ -44,6 +44,8 @@ stages:
               filePath: scripts/terraform_plan.sh
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
               arguments: >
+                -var pguser=$(pguser)
+                -var pgpassword=$(pgpassword)
                 -out tfplan.tfout
             env:
               TF_IN_AUTOMATION: true
