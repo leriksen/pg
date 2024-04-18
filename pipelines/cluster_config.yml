@@ -47,7 +47,15 @@ stages:
                       helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
                       
                       echo "Installing Secrets Store CSI Driver using Helm..."
-                      kubectl create ns csi-driver
+                      ns_count=$(kubectl get namespaces -o json | jq -r '[.items[].metadata | select(.name=="csi-driver")] | length')
+  
+                      if [[ $ns_count -eq 0 ]]; then
+                        echo create
+                        kubectl create ns csi-driver
+                      else
+                        echo exists
+                      fi
+                      
                       helm install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --namespace csi-driver
                       kubectl get pods --namespace=csi-driver
 
