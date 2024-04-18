@@ -35,5 +35,5 @@ stages:
                     scriptType: bash
                     scriptLocation: inlineScript
                     inlineScript: |
-                      az aks get-creds -n leifpgaks -g pg
+                      az aks get-credentials -n leifpgaks -g pg
                     addSpnToEnvironment: true
