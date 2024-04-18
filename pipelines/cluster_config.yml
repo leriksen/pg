@@ -5,15 +5,15 @@ variables:
 pool:
   vmImage: ubuntu-22.04
 
-trigger: none
-#  batch: true
-#  branches:
-#    include:
-#      - master
-#      - main
-#  paths:
-#    include:
-#      - pipelines/cluster_config.yml
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+      - main
+  paths:
+    include:
+      - pipelines/cluster_config.yml
 
 stages:
   - stage: config
