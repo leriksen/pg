@@ -36,5 +36,17 @@ stages:
                     scriptLocation: inlineScript
                     inlineScript: |
                       az aks get-credentials -n pg -g pg
-                      kubectl get pods
                     addSpnToEnvironment: true
+                - task: Bash@3
+                  displayName: Install CSI Drivers
+                  inputs:
+                    targetType: inline
+                    script: |
+                      echo "Adding Helm repo for Secret Store CSI..."
+                      helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
+  
+                      echo "Installing Secrets Store CSI Driver using Helm..."
+                      kubectl create ns csi-driver
+                      helm install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --namespace csi-driver
+                      kubectl get pods --namespace=csi-driver
+
