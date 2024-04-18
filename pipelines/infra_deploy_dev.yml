@@ -11,6 +11,9 @@ trigger:
     include:
       - master
       - main
+  paths:
+    exclude:
+      - pipelines/cluster_config.yml
 
 stages:
   - template: ./templates/plan.yml

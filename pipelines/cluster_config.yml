@@ -1,0 +1,39 @@
+variables:
+  - group: devops-dev
+  - group: pg-dev
+
+pool:
+  vmImage: ubuntu-22.04
+
+trigger: none
+  batch: true
+  branches:
+    include:
+      - master
+      - main
+  paths:
+    include:
+      - pipelines/cluster_config.yml
+
+stages:
+  - stage: config
+    displayName: Config Cluster
+    jobs:
+      - deployment: config
+        displayName: Config Cluster
+        workspace:
+          clean: all
+        environment: $(environment)
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureCLI@2
+                  displayName: get creds
+                  inputs:
+                    azureSubscription: $(service_connection)
+                    scriptType: bash
+                    scriptLocation: inlineScript
+                    inlineScript: |
+                      az aks get-creds -n leifpgaks -g pg
+                    addSpnToEnvironment: true
