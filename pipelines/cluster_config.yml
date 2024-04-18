@@ -37,16 +37,25 @@ stages:
                     inlineScript: |
                       az aks get-credentials -n pg -g pg
                     addSpnToEnvironment: true
+
                 - task: Bash@3
-                  displayName: Install CSI Drivers
+                  displayName: Install CSI Driver
                   inputs:
                     targetType: inline
                     script: |
                       echo "Adding Helm repo for Secret Store CSI..."
                       helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
-  
+                      
                       echo "Installing Secrets Store CSI Driver using Helm..."
                       kubectl create ns csi-driver
                       helm install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --namespace csi-driver
                       kubectl get pods --namespace=csi-driver
 
+                - task: Bash@3
+                  displayName: Install Azure KV CSI Driver
+                  inputs:
+                    targetType: inline
+                    script: |  
+                      echo "Installing Secrets Store CSI Driver with Azure Key Vault Provider..."
+                      kubectl apply -f https://raw.githubusercontent.com/Azure/secrets-store-csi-driver-provider-azure/master/deployment/provider-azure-installer.yaml --namespace csi-driver
+                      kubectl get pods -n csi-driver
