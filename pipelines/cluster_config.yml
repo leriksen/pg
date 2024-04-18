@@ -36,4 +36,5 @@ stages:
                     scriptLocation: inlineScript
                     inlineScript: |
                       az aks get-credentials -n pg -g pg
+                      kubectl get pods
                     addSpnToEnvironment: true
