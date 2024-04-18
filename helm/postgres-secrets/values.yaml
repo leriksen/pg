@@ -1,0 +1,12 @@
+tenantId: "4e5dff48-af2c-4e7e-a5fa-bb6560ec04b6"
+
+subscriptionId: "743b758a-f6e7-4823-b706-950a64a6c9f9"
+
+resourceGroupName: "pg"
+
+keyVaultName: "leifpgkv"
+
+secretProviderClassName: "secret-provider-kv"
+
+secret1Name: "pguser"
+secret2Name: "pgpassword"
