@@ -56,7 +56,7 @@ stages:
                         echo exists
                       fi
                       
-                      helm install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --namespace csi-driver
+                      helm upgrade --install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --namespace csi-driver
                       kubectl get pods --namespace=csi-driver
 
                 - task: Bash@3
