@@ -59,7 +59,7 @@ stages:
                         echo create
                         kubectl create ns csi-driver
                       else
-                        echo exists
+                        echo driver exists
                       fi
                       
                       helm upgrade --install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --namespace csi-driver
@@ -74,6 +74,23 @@ stages:
                       kubectl apply -f https://raw.githubusercontent.com/Azure/secrets-store-csi-driver-provider-azure/master/deployment/provider-azure-installer.yaml --namespace csi-driver
                       kubectl get pods -n csi-driver
 
+                - task: Bash@3
+                  displayName: Create Namespace
+                  targetType: inline
+                  script: |
+                    echo "Create namespace $(environment)"
+                    ns_count=$(kubectl get namespaces -o json | jq -r '[.items[].metadata | select(.name=="$(environment)")] | length')
+
+                    if [[ $ns_count -eq 0 ]]; then
+                      echo create
+                      kubectl create ns $(environment)
+                    else
+                      echo namespace $(environment) exists
+                    fi
+
+                    helm upgrade --install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --namespace csi-driver
+                    kubectl get pods --namespace=csi-driver
+
                 - task: HelmDeploy@0
                   displayName: Helm Package
                   inputs:
@@ -84,13 +101,14 @@ stages:
                     arguments: --app-version $(Build.BuildNumber)
                     save: false
 
-#                - task: HelmDeploy@0
-#                  displayName: Secret Provider Class
-#                  inputs:
-#                    connectionType: none
-#                    command: upgrade
-#                    chartType: FilePath
-#                    chartPath: $(Build.ArtifactStagingDirectory)/postgres-secrets-0.1.0.tgz
-#                    releaseName: postgres
-#                    valueFile: helm/postgres-secrets/values.yaml
-#                    arguments: --timeout 60s
+                - task: HelmDeploy@0
+                  displayName: Secret Provider Class
+                  inputs:
+                    namespace: $(environment)
+                    connectionType: none
+                    command: upgrade
+                    chartType: FilePath
+                    chartPath: $(Build.ArtifactStagingDirectory)/postgres-secrets-0.1.0.tgz
+                    releaseName: postgres
+                    valueFile: helm/postgres-secrets/values.yaml
+                    arguments: --timeout 60s
