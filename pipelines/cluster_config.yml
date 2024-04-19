@@ -76,20 +76,21 @@ stages:
 
                 - task: Bash@3
                   displayName: Create Namespace
-                  targetType: inline
-                  script: |
-                    echo "Create namespace $(environment)"
-                    ns_count=$(kubectl get namespaces -o json | jq -r '[.items[].metadata | select(.name=="$(environment)")] | length')
-
-                    if [[ $ns_count -eq 0 ]]; then
-                      echo create
-                      kubectl create ns $(environment)
-                    else
-                      echo namespace $(environment) exists
-                    fi
-
-                    helm upgrade --install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --namespace csi-driver
-                    kubectl get pods --namespace=csi-driver
+                  inputs:
+                    targetType: inline
+                    script: |
+                      echo "Create namespace $(environment)"
+                      ns_count=$(kubectl get namespaces -o json | jq -r '[.items[].metadata | select(.name=="$(environment)")] | length')
+  
+                      if [[ $ns_count -eq 0 ]]; then
+                        echo create
+                        kubectl create ns $(environment)
+                      else
+                        echo namespace $(environment) exists
+                      fi
+  
+                      helm upgrade --install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --namespace csi-driver
+                      kubectl get pods --namespace=csi-driver
 
                 - task: HelmDeploy@0
                   displayName: Helm Package
