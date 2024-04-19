@@ -28,11 +28,11 @@ stages:
           runOnce:
             deploy:
               steps:
-                - checkout
+                - checkout: self
 
-                - KubectlInstaller@0
+                - task: KubectlInstaller@0
 
-                - HelmInstaller@1
+                - task: HelmInstaller@1
 
                 - task: AzureCLI@2
                   displayName: Kubectl Config
