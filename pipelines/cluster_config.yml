@@ -80,7 +80,7 @@ stages:
                     command: package
                     chartPath: helm/postgres-secrets
                     chartVersion: 0.1.0
-                    destination: $(Build.ArtifactsStagingDirectory)
+                    destination: $(Build.ArtifactStagingDirectory)
                     arguments: --app-version $(Build.BuildNumber)
                     save: false
 
@@ -90,7 +90,7 @@ stages:
 #                    connectionType: none
 #                    command: upgrade
 #                    chartType: FilePath
-#                    chartPath: $(Build.ArtifactsStagingDirectory)/postgres-secrets-0.1.0.tgz
+#                    chartPath: $(Build.ArtifactStagingDirectory)/postgres-secrets-0.1.0.tgz
 #                    releaseName: postgres
 #                    valueFile: helm/postgres-secrets/values.yaml
 #                    arguments: --timeout 60s
