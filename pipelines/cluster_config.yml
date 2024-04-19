@@ -106,7 +106,8 @@ stages:
                   displayName: Secret Provider Class
                   inputs:
                     namespace: $(environment)
-                    connectionType: none
+                    connectionType: Kubernetes Service Connection
+                    kubernetesServiceConnection: sc-aks
                     command: upgrade
                     chartType: FilePath
                     chartPath: $(Build.ArtifactStagingDirectory)/postgres-secrets-0.1.0.tgz
