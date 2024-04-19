@@ -28,8 +28,14 @@ stages:
           runOnce:
             deploy:
               steps:
+                - checkout
+
+                - KubectlInstaller@0
+
+                - HelmInstaller@1
+
                 - task: AzureCLI@2
-                  displayName: get creds
+                  displayName: Kubectl Config
                   inputs:
                     azureSubscription: $(service_connection)
                     scriptType: bash
@@ -67,3 +73,24 @@ stages:
                       echo "Installing Secrets Store CSI Driver with Azure Key Vault Provider..."
                       kubectl apply -f https://raw.githubusercontent.com/Azure/secrets-store-csi-driver-provider-azure/master/deployment/provider-azure-installer.yaml --namespace csi-driver
                       kubectl get pods -n csi-driver
+
+                - task: HelmDeploy@0
+                  displayName: Helm Package
+                  inputs:
+                    command: package
+                    chartPath: helm/postgres-secrets
+                    chartVersion: 0.1.0
+                    destination: $(Build.ArtifactsStagingDirectory)
+                    arguments: --app-version $(Build.BuildNumber)
+                    save: false
+
+#                - task: HelmDeploy@0
+#                  displayName: Secret Provider Class
+#                  inputs:
+#                    connectionType: none
+#                    command: upgrade
+#                    chartType: FilePath
+#                    chartPath: $(Build.ArtifactsStagingDirectory)/postgres-secrets-0.1.0.tgz
+#                    releaseName: postgres
+#                    valueFile: helm/postgres-secrets/values.yaml
+#                    arguments: --timeout 60s
