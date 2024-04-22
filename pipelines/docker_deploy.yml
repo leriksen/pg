@@ -1,0 +1,15 @@
+- stage: Build
+  displayName: Build and push stage
+  jobs:
+    - job: Build
+      displayName: Build job
+      steps:
+        - task: Docker@2
+          displayName: Build and push an image to container registry
+          inputs:
+            command: buildAndPush
+            repository: postgres
+            dockerfile: $(Build.SourceDirectory)/docker/Dockerfile
+            containerRegistry: $(acr_service_connection)
+            tags: |
+              0.0.1-$(Build.BuildId)

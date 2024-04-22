@@ -38,7 +38,7 @@ stages:
                 - task: AzureCLI@2
                   displayName: Kubectl Config
                   inputs:
-                    azureSubscription: $(service_connection)
+                    azureSubscription: $(arm_service_connection)
                     scriptType: bash
                     scriptLocation: inlineScript
                     inlineScript: |
@@ -83,7 +83,7 @@ stages:
                   inputs:
                     namespace:                   $(environment)
                     connectionType:              Kubernetes Service Connection
-                    kubernetesServiceConnection: sc-aks
+                    kubernetesServiceConnection: $(aks_service_connection)
                     command:                     upgrade
                     chartType:                   FilePath
                     chartPath:                   $(Build.ArtifactStagingDirectory)/postgres-secrets-0.1.0.tgz
