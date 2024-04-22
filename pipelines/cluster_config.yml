@@ -92,10 +92,6 @@ stages:
                       helm upgrade --install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --namespace csi-driver
                       kubectl get pods --namespace=csi-driver
 
-                - bash: |
-                    helm template ./postgres-secrets --values postgres-secrets/values.yaml
-                  workingDirectory: $(Build.SourcesDirectory)/helm
-
                 - task: HelmDeploy@0
                   displayName: Helm Package
                   inputs:
@@ -106,21 +102,16 @@ stages:
                     arguments: --app-version $(Build.BuildNumber)
                     save: false
 
-                - bash: |
-                    ls -al
-                    tar zxvf postgres-secrets-0.1.0.tgz
-                    ls -al
-                  workingDirectory: $(Build.ArtifactStagingDirectory)
-
                 - task: HelmDeploy@0
                   displayName: Secret Provider Class
                   inputs:
-                    namespace: $(environment)
-                    connectionType: Kubernetes Service Connection
+                    namespace:                   $(environment)
+                    connectionType:              Kubernetes Service Connection
                     kubernetesServiceConnection: sc-aks
-                    command: upgrade
-                    chartType: FilePath
-                    chartPath: $(Build.ArtifactStagingDirectory)/postgres-secrets-0.1.0.tgz
-                    releaseName: postgres
-                    valueFile: helm/postgres-secrets/values.yaml
-                    arguments: --timeout 60s
+                    command:                     upgrade
+                    chartType:                   FilePath
+                    chartPath:                   $(Build.ArtifactStagingDirectory)/postgres-secrets-0.1.0.tgz
+                    chartVersion:                0.1.0
+                    releaseName:                 postgres
+                    valueFile:                   helm/postgres-secrets/values.yaml
+                    arguments:                   --install --create-namespace
