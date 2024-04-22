@@ -1,11 +1,11 @@
 kind: Pod
 apiVersion: v1
 metadata:
-  name: busybox-secrets-store-inline-user-msi
+  name: postgres-cli
 spec:
   containers:
     - name: postgres-cli
-      image: acrleif01.azurecr.io/postgres:0.0.1-1169
+      image: acrleif01.azurecr.io/postgres:latest
       command:
         - "/bin/sleep"
         - "10000"
