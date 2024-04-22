@@ -100,7 +100,5 @@ stages:
                       exit 0
                     else
                       echo incorrect
-                      echo $(pgpassword)
-                      echo $pw
                       exit 1
                     fi
