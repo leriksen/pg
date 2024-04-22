@@ -86,17 +86,6 @@ stages:
                       helm upgrade --install --create-namespace csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --namespace csi-driver
                       kubectl get pods --namespace=csi-driver
 
-#                - task: Bash@3
-#                  displayName: Install Azure AAD Pod Identity
-#                  inputs:
-#                    targetType: inline
-#                    script: |
-#                      echo "Installing Azure AAD Pod Identity to cluster..."
-#
-#                      helm repo add aad-pod-identity https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
-#                      helm install pod-identity aad-pod-identity/aad-pod-identity
-#                      kubectl get pods
-
                 - task: HelmDeploy@0
                   displayName: Helm Package
                   inputs:
@@ -120,3 +109,14 @@ stages:
                     releaseName:                 postgres
                     valueFile:                   helm/postgres-secrets/values.yaml
                     arguments:                   --install --create-namespace
+
+                - bash: |
+                    pw=$(kubectl exec busybox-secrets-store-inline-user-msi -n dev -- cat /mnt/secrets-store/pgpassword)
+
+                    if [[ pw == $(pgpassword) ]]; then
+                      echo correct
+                      exit 0
+                    else
+                      echo incorrect
+                      exit 1
+                    fi
