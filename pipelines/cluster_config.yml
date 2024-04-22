@@ -54,37 +54,19 @@ stages:
                       helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
                       
                       echo "Installing Secrets Store CSI Driver using Helm..."
-                      ns_count=$(kubectl get namespaces -o json | jq -r '[.items[].metadata | select(.name=="csi-driver")] | length')
-  
-                      if [[ $ns_count -eq 0 ]]; then
-                        echo create
-                        kubectl create ns csi-driver
-                      else
-                        echo driver exists
-                      fi
-                      
                       helm upgrade --install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --namespace csi-driver
+  
                       kubectl get pods --namespace=csi-driver
 
                 - task: Bash@3
-                  displayName: Install Azure KV CSI Driver
+                  displayName: Install Azure KV CSI Provider
                   inputs:
                     targetType: inline
                     script: |  
-                      echo "Installing Secrets Store CSI Driver with Azure Key Vault Provider..."
+                      echo "Installing Secrets Store Provider for Azure Key Vault..."
 
                       kubectl apply -f https://raw.githubusercontent.com/Azure/secrets-store-csi-driver-provider-azure/master/deployment/provider-azure-installer.yaml --namespace csi-driver
                       kubectl get pods -n csi-driver
-
-                - task: Bash@3
-                  displayName: Install CSI Driver
-                  inputs:
-                    targetType: inline
-                    script: |
-                      echo "Installing Secrets Store CSI Driver..."
-
-                      helm upgrade --install --create-namespace csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --namespace csi-driver
-                      kubectl get pods --namespace=csi-driver
 
                 - task: HelmDeploy@0
                   displayName: Helm Package
@@ -113,10 +95,12 @@ stages:
                 - bash: |
                     pw=$(kubectl exec busybox-secrets-store-inline-user-msi -n dev -- cat /mnt/secrets-store/pgpassword)
 
-                    if [[ pw == $(pgpassword) ]]; then
+                    if [[ "${pw}" == "$(pgpassword)" ]]; then
                       echo correct
                       exit 0
                     else
                       echo incorrect
+                      echo $(pgpassword)
+                      echo $pw
                       exit 1
                     fi
