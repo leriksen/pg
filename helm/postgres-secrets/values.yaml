@@ -8,5 +8,6 @@ keyVaultName: "leifpgkv"
 
 secretProviderClassName: "secret-provider-kv"
 
-secret1Name: "pguser"
-secret2Name: "pgpassword"
+secrets:
+  - pguser
+  - pgpassword

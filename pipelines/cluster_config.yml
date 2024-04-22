@@ -92,6 +92,10 @@ stages:
                       helm upgrade --install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --namespace csi-driver
                       kubectl get pods --namespace=csi-driver
 
+                - bash: |
+                    helm template ./postgres-secrets --values postgres-secrets/values.yaml
+                  workingDirectory: $(Build.SourcesDirectory)/helm
+
                 - task: HelmDeploy@0
                   displayName: Helm Package
                   inputs:
@@ -101,6 +105,10 @@ stages:
                     destination: $(Build.ArtifactStagingDirectory)
                     arguments: --app-version $(Build.BuildNumber)
                     save: false
+
+                - bash: |
+                    ls -al
+                  workingDirectory: $(Build.ArtifactStagingDirectory)
 
                 - task: HelmDeploy@0
                   displayName: Secret Provider Class
