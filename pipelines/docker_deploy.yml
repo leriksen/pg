@@ -19,7 +19,7 @@ stages:
             inputs:
               command: buildAndPush
               repository: postgres
-              dockerfile: $(Build.SourceDirectory)/docker/Dockerfile
+              dockerfile: $(Build.SourcesDirectory)/docker/Dockerfile
               containerRegistry: $(acr_service_connection)
               tags: |
                 0.0.1-$(Build.BuildId)
