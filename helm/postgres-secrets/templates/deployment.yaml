@@ -4,8 +4,8 @@ metadata:
   name: busybox-secrets-store-inline-user-msi
 spec:
   containers:
-    - name: busybox
-      image: registry.k8s.io/e2e-test-images/busybox:1.29-4
+    - name: postgres-cli
+      image: acrleif01.azurecr.io/postgres:0.0.1-1169
       command:
         - "/bin/sleep"
         - "10000"

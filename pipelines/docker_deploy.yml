@@ -23,4 +23,4 @@ stages:
               containerRegistry: $(acr_service_connection)
               tags: |
                 0.0.1-$(Build.BuildId)
-                0.0.1:latest
+                latest
