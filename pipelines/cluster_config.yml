@@ -14,6 +14,7 @@ trigger:
   paths:
     include:
       - pipelines/cluster_config.yml
+      - helm/**/*
 
 stages:
   - stage: config
@@ -71,26 +72,30 @@ stages:
                     targetType: inline
                     script: |  
                       echo "Installing Secrets Store CSI Driver with Azure Key Vault Provider..."
+
                       kubectl apply -f https://raw.githubusercontent.com/Azure/secrets-store-csi-driver-provider-azure/master/deployment/provider-azure-installer.yaml --namespace csi-driver
                       kubectl get pods -n csi-driver
 
                 - task: Bash@3
-                  displayName: Create Namespace
+                  displayName: Install CSI Driver
                   inputs:
                     targetType: inline
                     script: |
-                      echo "Create namespace $(environment)"
-                      ns_count=$(kubectl get namespaces -o json | jq -r '[.items[].metadata | select(.name=="$(environment)")] | length')
-  
-                      if [[ $ns_count -eq 0 ]]; then
-                        echo create
-                        kubectl create ns $(environment)
-                      else
-                        echo namespace $(environment) exists
-                      fi
-  
-                      helm upgrade --install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --namespace csi-driver
+                      echo "Installing Secrets Store CSI Driver..."
+
+                      helm upgrade --install --create-namespace csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --namespace csi-driver
                       kubectl get pods --namespace=csi-driver
+
+                - task: Bash@3
+                  displayName: Install Azure AAD Pod Identity
+                  inputs:
+                    targetType: inline
+                    script: |
+                      echo "Installing Azure AAD Pod Identity to cluster..."
+
+                      helm repo add aad-pod-identity https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
+                      helm install pod-identity aad-pod-identity/aad-pod-identity
+                      kubectl get pods
 
                 - task: HelmDeploy@0
                   displayName: Helm Package
@@ -103,7 +108,7 @@ stages:
                     save: false
 
                 - task: HelmDeploy@0
-                  displayName: Secret Provider Class
+                  displayName: Helm Deploy
                   inputs:
                     namespace:                   $(environment)
                     connectionType:              Kubernetes Service Connection
