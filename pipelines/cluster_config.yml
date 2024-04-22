@@ -108,6 +108,8 @@ stages:
 
                 - bash: |
                     ls -al
+                    tar zxvf postgres-secrets-0.1.0.tgz
+                    ls -al
                   workingDirectory: $(Build.ArtifactStagingDirectory)
 
                 - task: HelmDeploy@0
