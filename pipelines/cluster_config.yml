@@ -93,7 +93,7 @@ stages:
                     arguments:                   --install --create-namespace
 
                 - bash: |
-                    pw=$(kubectl exec busybox-secrets-store-inline-user-msi -n dev -- cat /mnt/secrets-store/pgpassword)
+                    pw=$(kubectl exec postgres-cli -n dev -- cat /mnt/secrets-store/pgpassword)
 
                     if [[ "${pw}" == "$(pgpassword)" ]]; then
                       echo correct

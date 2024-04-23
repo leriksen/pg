@@ -2,12 +2,12 @@ FROM alpine:latest
 CMD ["/bin/sh"]
 RUN apk --no-cache add postgresql-client
 
+CMD [ "psql", "--host=leifpg01.postgres.database.azure.com", "--port=5432", "--dbname=db", "--username=psqladmin", "--set=sslmode=require", "-c", "select version();" ]
+
 # docker build --tag psql .
-# docker run -dit -e PGPASSWORD="$(cat ../terraform/.pgpass)" --name psql1 psql
-# docker exec -it psql1 psql -h leifpg.postgres.database.azure.com -U psqladmin -d db -c 'select version();'
+# docker run --rm -e PGPASSWORD="$(cat ../terraform/.pgpass)" --name psql psql
 
 # then
 
 # docker push leriksen/psql:0.0.1
-# docker run -dit -e PGPASSWORD="$(cat ../terraform/.pgpass)" --name psql1 leriksen/psql:0.0.1
-# docker exec -it psql1 psql -h leifpg.postgres.database.azure.com -U psqladmin -d db -c 'select version();'
+# docker run --rm -e PGPASSWORD="$(cat ../terraform/.pgpass)" --name psql leriksen/psql:0.0.1
