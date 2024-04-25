@@ -12,11 +12,11 @@ resource "azuredevops_serviceendpoint_azurecr" "acr" {
   azurecr_subscription_name = data.azurerm_subscription.current.display_name
 }
 
-resource "azuredevops_resource_authorization" "acr" {
-  project_id  = data.azuredevops_project.pg.id
-  resource_id = azuredevops_serviceendpoint_azurecr.acr.id
-  authorized  = true
-}
+#resource "azuredevops_pipeline_authorization" "acr" {
+#  project_id  = data.azuredevops_project.pg.id
+#  resource_id = azuredevops_serviceendpoint_azurecr.acr.id
+#  type        = "endpoint"
+#}
 
 resource "azuredevops_serviceendpoint_kubernetes" "aks" {
   apiserver_url         = "https://${azurerm_kubernetes_cluster.aks.fqdn}"
@@ -29,8 +29,8 @@ resource "azuredevops_serviceendpoint_kubernetes" "aks" {
   }
 }
 
-resource "azuredevops_resource_authorization" "aks" {
-  project_id  = data.azuredevops_project.pg.id
-  resource_id = azuredevops_serviceendpoint_kubernetes.aks.id
-  authorized  = true
-}
+#resource "azuredevops_pipeline_authorization" "aks" {
+#  project_id  = data.azuredevops_project.pg.id
+#  resource_id = azuredevops_serviceendpoint_kubernetes.aks.id
+#  type        = "endpoint"
+#}
