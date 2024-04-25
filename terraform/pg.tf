@@ -1,5 +1,14 @@
+# Azure can take up to a week to cleanup a server group for PG
+resource "random_id" "server" {
+  keepers = {
+    # Generate a new id each time we change this
+    id = 1
+  }
+
+  byte_length = 2
+}
 resource "azurerm_postgresql_flexible_server" "pg" {
-  name                   = "leifpg01"
+  name                   = "leifpg${random_id.server.hex}"
   resource_group_name    = azurerm_resource_group.pg.name
   location               = azurerm_resource_group.pg.location
   sku_name               = module.environment.pg_sku_name
