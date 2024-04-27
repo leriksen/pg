@@ -1,6 +1,7 @@
 variables:
   - group: devops-dev
   - group: pg-dev
+  - group: tf_endpoints
 
 pool:
   vmImage: ubuntu-22.04
@@ -35,14 +36,14 @@ stages:
 
                 - task: HelmInstaller@1
 
-                - task: AzureCLI@2
+                - task: Bash@3
                   displayName: Kubectl Config
                   inputs:
-                    azureSubscription: $(arm_service_connection)
                     scriptType: bash
                     scriptLocation: inlineScript
                     inlineScript: |
-                      az aks get-credentials -n pg -g pg
+                      mkdir -p ~/.kube
+                      cat $(kubeconfig) > ~/.kube/config
                     addSpnToEnvironment: true
 
                 - task: Bash@3
