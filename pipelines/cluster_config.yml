@@ -93,7 +93,7 @@ stages:
                     chartVersion:                0.1.0
                     releaseName:                 postgres
                     valueFile:                   helm/postgres-secrets/values.yaml
-                    arguments:                   --install --create-namespace
+                    arguments:                   --install --create-namespace --timeout 30s
 
                 - bash: |
                     pw=$(kubectl exec postgres-cli -n dev -- cat /mnt/secrets-store/pgpassword)
