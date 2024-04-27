@@ -34,29 +34,3 @@ resource "azuredevops_pipeline_authorization" "aks" {
   resource_id = azuredevops_serviceendpoint_kubernetes.aks.id
   type        = "endpoint"
 }
-
-resource "azuredevops_variable_group" "tf_endpoints" {
-  name         = "tf_endpoints"
-  description  = "Endpoint names created by Terraform"
-  project_id   = data.azuredevops_project.pg.id
-  allow_access = true
-
-  variable {
-    name  = azuredevops_serviceendpoint_kubernetes.aks.service_endpoint_name
-    value = azuredevops_serviceendpoint_kubernetes.aks.service_endpoint_name
-  }
-
-  variable {
-    name  = azuredevops_serviceendpoint_azurecr.acr.service_endpoint_name
-    value = azuredevops_serviceendpoint_azurecr.acr.service_endpoint_name
-  }
-
-  # there is no secure file resource currently in the azdo provider, although there is a (incomplete) rest api
-  # https://github.com/microsoft/azure-pipelines-tasks/issues/9172
-  variable {
-    name         = "kubeconfig"
-    secret_value = azurerm_kubernetes_cluster.aks.kube_config_raw
-    is_secret    = true
-  }
-
-}

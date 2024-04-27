@@ -1,7 +1,6 @@
 variables:
   - group: devops-dev
   - group: pg-dev
-  - group: tf_endpoints
 
 pool:
   vmImage: ubuntu-22.04
@@ -35,16 +34,6 @@ stages:
                 - task: KubectlInstaller@0
 
                 - task: HelmInstaller@1
-
-                - task: Bash@3
-                  displayName: Kubectl Config
-                  inputs:
-                    scriptType: bash
-                    scriptLocation: inlineScript
-                    inlineScript: |
-                      mkdir -p ~/.kube
-                      cat $(kubeconfig) > ~/.kube/config
-                    addSpnToEnvironment: true
 
                 - task: Bash@3
                   displayName: Install CSI Driver
