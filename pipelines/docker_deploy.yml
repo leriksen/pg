@@ -20,7 +20,7 @@ stages:
               command: buildAndPush
               repository: postgres
               dockerfile: $(Build.SourcesDirectory)/docker/Dockerfile
-              containerRegistry: $(acr_service_connection)
+              containerRegistry: tf_sc_acr
               tags: |
                 0.0.1-$(Build.BuildId)
                 latest
