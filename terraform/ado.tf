@@ -38,6 +38,7 @@ resource "azuredevops_pipeline_authorization" "aks" {
 resource "azuredevops_variable_group" "infra" {
   name       = "infra"
   project_id = data.azuredevops_project.pg.id
+  allow_access = true
 
   variable {
     name = "pghost"

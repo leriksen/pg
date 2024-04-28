@@ -1,6 +1,6 @@
 FROM alpine:latest
 CMD ["/bin/sh"]
-RUN apk --no-cache add postgresql-client
+RUN apk --no-cache add postgresql-client curl
 
 COPY sql/ /sql/
 
