@@ -13,6 +13,17 @@ spec:
         - name: secrets-store01-inline
           mountPath: "/mnt/secrets-store"
           readOnly: true
+      env:
+        - name: PGPASSWORD
+          value: $(pgpassword)
+        - name: PGUSER
+          value: $(pguser)
+        - name: PGHOST
+          value: $(pghost)
+        - name: PGPORT
+          value: 5432
+        - name: PGDATABASE
+          value: $(pgdatabase
   volumes:
     - name: secrets-store01-inline
       csi:

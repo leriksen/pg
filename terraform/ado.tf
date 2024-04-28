@@ -34,3 +34,18 @@ resource "azuredevops_pipeline_authorization" "aks" {
   resource_id = azuredevops_serviceendpoint_kubernetes.aks.id
   type        = "endpoint"
 }
+
+resource "azuredevops_variable_group" "infra" {
+  name       = "infra"
+  project_id = data.azuredevops_project.pg.id
+
+  variable {
+    name = "pghost"
+    value = azurerm_postgresql_flexible_server.pg.fqdn
+  }
+
+  variable {
+    name = "pgdatabase"
+    value = azurerm_postgresql_flexible_server_database.db.name
+  }
+}
