@@ -2,7 +2,7 @@ FROM alpine:latest
 CMD ["/bin/sh"]
 RUN apk --no-cache add postgresql-client
 
-COPY sql/*.sql .
+COPY sql/ /sql/
 
 CMD [ "psql", "--host=leifpg01.postgres.database.azure.com", "--port=5432", "--dbname=db", "--username=psqladmin", "--set=sslmode=require", "-f", "./01_version.sql" ]
 
