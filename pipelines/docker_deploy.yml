@@ -5,7 +5,16 @@ variables:
 pool:
   vmImage: ubuntu-22.04
 
-trigger: none
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+      - main
+  paths:
+    include:
+      - docker/Dockerfile
+      - pipelines/docker_deploy.yml
 
 stages:
   - stage: Build
