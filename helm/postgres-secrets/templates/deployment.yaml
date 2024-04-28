@@ -15,15 +15,15 @@ spec:
           readOnly: true
       env:
         - name: PGPASSWORD
-          value: $(pgpassword)
+          value: {{ .Values.pgpassword }}
         - name: PGUSER
-          value: $(pguser)
+          value: {{ .Values.pguser }}
         - name: PGHOST
-          value: $(pghost)
+          value: {{ .Values.pghost }}
         - name: PGPORT
-          value: 5432
+          value: "5432"
         - name: PGDATABASE
-          value: $(pgdatabase
+          value: {{ .Values.pgdatabase }}
   volumes:
     - name: secrets-store01-inline
       csi:
