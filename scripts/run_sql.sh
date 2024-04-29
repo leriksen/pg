@@ -25,6 +25,6 @@ do
     echo "line is empty"
   else
     echo "process ${line}"
-    psql --file "${line}"
+    echo "psql --file ${line}"
   fi
 done < "$input"

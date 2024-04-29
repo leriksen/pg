@@ -5,4 +5,4 @@ RUN apk --no-cache add postgresql-client curl
 COPY sql/ /sql/
 COPY scripts/run_sql.sh /scripts
 
-CMD [ "psql", "--set=sslmode=require", "-f", "/sql/01_version.sql" ]
+CMD [ "/scripts/run_sql.sh", "/sql" ]
