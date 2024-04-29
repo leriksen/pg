@@ -2,5 +2,29 @@
 
 set -euo pipefail
 
-psql "--host=leifpg01.postgres.database.azure.com" "--port=5432" "--dbname=db" "--username=psqladmin" "--set=sslmode=require" -c 'select version();'
 
+input="manifest.txt"
+
+base_directory="${1}"
+
+cd "${base_directory}"
+
+echo "reading file ${input} from ${base_directory}"
+
+pwd
+
+ls -al
+
+while IFS= read -r line
+do
+  echo "$line"
+
+  if [[ "${line}" =~ ^\s*# ]]; then
+    echo "line is a comment"
+  elif [[ "${line}" =~ ^\s*$ ]]; then
+    echo "line is empty"
+  else
+    echo "process ${line}"
+    psql --file "${line}"
+  fi
+done < "$input"
