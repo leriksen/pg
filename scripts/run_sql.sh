@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-
 input="manifest.txt"
 
 base_directory="${1}"
@@ -10,10 +9,6 @@ base_directory="${1}"
 cd "${base_directory}"
 
 echo "reading file ${input} from ${base_directory}"
-
-pwd
-
-ls -al
 
 while IFS= read -r line
 do
