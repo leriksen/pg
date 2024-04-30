@@ -1,4 +1,4 @@
 sql/01_version.sql
-# sql/01_version.sql
+# a comment, followed by a line with just whitespace
 
-sql/02_version.sql
+sql/02_schema.sql
