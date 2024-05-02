@@ -18,11 +18,11 @@ trigger:
       - helm/postgres/**/*
 
 stages:
-  - stage: config
-    displayName: Config Cluster
+  - stage: deploy_helm
+    displayName: Deploy Helm
     jobs:
-      - deployment: config
-        displayName: Config Cluster
+      - deployment: helm
+        displayName: Deploy Helm
         workspace:
           clean: all
         environment: $(environment)
