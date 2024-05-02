@@ -4,30 +4,27 @@ metadata:
   name: postgres-cli
 spec:
   containers:
-    - name: postgres-cli
+    - name:  postgres-cli
       image: acrleif01.azurecr.io/postgres:latest
-      command:
-        - "/bin/sleep"
-        - "10000"
       volumeMounts:
-        - name: secrets-store01-inline
+        - name:      secrets-store01-inline
           mountPath: "/mnt/secrets-store"
-          readOnly: true
+          readOnly:  true
       env:
-        - name: PGPASSWORD
+        - name:  PGPASSWORD
           value: {{ .Values.pgpassword }}
-        - name: PGUSER
+        - name:  PGUSER
           value: {{ .Values.pguser }}
-        - name: PGHOST
+        - name:  PGHOST
           value: {{ .Values.pghost }}
-        - name: PGPORT
-          value: "5432"
-        - name: PGDATABASE
+        - name:  PGPORT
+          value: {{ default 5432 .Values.port }}
+        - name:  PGDATABASE
           value: {{ .Values.pgdatabase }}
   volumes:
     - name: secrets-store01-inline
       csi:
-        driver: secrets-store.csi.k8s.io
+        driver:   secrets-store.csi.k8s.io
         readOnly: true
         volumeAttributes:
           secretProviderClass: {{ .Values.secretProviderClassName }}

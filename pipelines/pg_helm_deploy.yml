@@ -44,6 +44,13 @@ stages:
                     arguments: --app-version $(Build.BuildNumber)
                     save: false
 
+                - task: PublishPipelineArtifact@1
+                  displayName: Save helm package
+                  inputs:
+                    targetPath: $(Build.ArtifactStagingDirectory)/postgres-0.1.0.tgz
+                    artifact: helm_postgres_package
+                    publishLocation: pipeline
+
                 - task: HelmDeploy@0
                   displayName: Helm Deploy
                   inputs:

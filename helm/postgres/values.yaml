@@ -4,4 +4,10 @@ subscriptionId: "743b758a-f6e7-4823-b706-950a64a6c9f9"
 
 resourceGroupName: "pg"
 
+keyVaultName: "leifpgkv"
+
 secretProviderClassName: "secret-provider-kv"
+
+secrets:
+  - pguser
+  - pgpassword
