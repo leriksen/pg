@@ -32,19 +32,7 @@ stages:
               steps:
                 - checkout: self
 
-                - task: KubectlInstaller@0
-
                 - task: HelmInstaller@1
-
-                - task: AzureCLI@2
-                  displayName: Kubectl Config
-                  inputs:
-                    azureSubscription: sc-azure-pg
-                    scriptType: bash
-                    scriptLocation: inlineScript
-                    inlineScript: |
-                      az aks get-credentials -n pg -g pg
-                    addSpnToEnvironment: true
 
                 - task: HelmDeploy@0
                   displayName: Helm Package
