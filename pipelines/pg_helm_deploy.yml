@@ -1,0 +1,84 @@
+variables:
+  - group: devops-dev
+  - group: pg-dev
+  - group: infra
+
+pool:
+  vmImage: ubuntu-22.04
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+      - main
+  paths:
+    include:
+      - pipelines/pg_helm_deploy.yml
+      - helm/postgres/**/*
+
+stages:
+  - stage: config
+    displayName: Config Cluster
+    jobs:
+      - deployment: config
+        displayName: Config Cluster
+        workspace:
+          clean: all
+        environment: $(environment)
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+
+                - task: KubectlInstaller@0
+
+                - task: HelmInstaller@1
+
+                - task: AzureCLI@2
+                  displayName: Kubectl Config
+                  inputs:
+                    azureSubscription: sc-azure-pg
+                    scriptType: bash
+                    scriptLocation: inlineScript
+                    inlineScript: |
+                      az aks get-credentials -n pg -g pg
+                    addSpnToEnvironment: true
+
+                - task: HelmDeploy@0
+                  displayName: Helm Package
+                  inputs:
+                    command: package
+                    chartPath: helm/postgres
+                    chartVersion: 0.1.0
+                    destination: $(Build.ArtifactStagingDirectory)
+                    arguments: --app-version $(Build.BuildNumber)
+                    save: false
+
+                - task: HelmDeploy@0
+                  displayName: Helm Deploy
+                  inputs:
+                    namespace:                   $(environment)
+                    connectionType:              Kubernetes Service Connection
+                    kubernetesServiceConnection: tf_sc_aks
+                    command:                     upgrade
+                    chartType:                   FilePath
+                    chartPath:                   $(Build.ArtifactStagingDirectory)/postgres-0.1.0.tgz
+                    chartVersion:                0.1.0
+                    releaseName:                 postgres
+                    valueFile:                   helm/postgres/values.yaml
+                    arguments:                   --install --create-namespace --timeout 30s
+                    overrideValues:              pguser=$(pguser),pgpassword=$(pgpassword),pghost=$(pghost),pgdatabase=$(pgdatabase)
+
+                - bash: |
+                    pw=$(kubectl exec postgres-cli -n dev -- cat /mnt/secrets-store/pgpassword)
+
+                    if [[ "${pw}" == "$(pgpassword)" ]]; then
+                      echo correct
+                      exit 0
+                    else
+                      echo incorrect
+                      exit 1
+                    fi
+                  displayName: Confirm mounted
