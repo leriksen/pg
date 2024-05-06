@@ -11,3 +11,5 @@ secretProviderClassName: "secret-provider-kv"
 secrets:
   - pguser
   - pgpassword
+
+port: "5432"

@@ -18,7 +18,7 @@ spec:
         - name:  PGHOST
           value: {{ .Values.pghost }}
         - name:  PGPORT
-          value: {{ default 5432 .Values.port }}
+          value: "{{ default 5432 .Values.port }}"
         - name:  PGDATABASE
           value: {{ .Values.pgdatabase }}
   volumes:
