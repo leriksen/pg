@@ -4,7 +4,14 @@ metadata:
   name: loggers
 spec:
   containers:
-    - name: count-log-1
+    - name: consumer
+      image: busybox:1.28
+      args: [ /bin/sh, -c, 'tail -n+1 -F /var/log/1.log' ]
+      volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+
+    - name: producer
       image: busybox:1.28
       args:
         - /bin/sh
