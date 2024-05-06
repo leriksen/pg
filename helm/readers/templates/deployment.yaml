@@ -1,7 +1,7 @@
 kind: Pod
 apiVersion: v1
 metadata:
-  name: writers
+  name: readers
 spec:
   containers:
     - name: count-log-1
