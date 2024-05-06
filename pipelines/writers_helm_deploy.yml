@@ -14,8 +14,8 @@ trigger:
       - main
   paths:
     include:
-      - pipelines/writers_helm_deploy.yml
-      - helm/writers/**/*
+      - pipelines/readers_helm_deploy.yml
+      - helm/readers/**/*
 
 stages:
   - stage: deploy_helm
@@ -38,7 +38,7 @@ stages:
                   displayName: Helm Package
                   inputs:
                     command: package
-                    chartPath: helm/writers
+                    chartPath: helm/readers
                     chartVersion: 0.1.0
                     destination: $(Build.ArtifactStagingDirectory)
                     arguments: --app-version $(Build.BuildNumber)
@@ -47,8 +47,8 @@ stages:
                 - task: PublishPipelineArtifact@1
                   displayName: Save helm package
                   inputs:
-                    targetPath: $(Build.ArtifactStagingDirectory)/writers-0.1.0.tgz
-                    artifact: helm_writers_package
+                    targetPath: $(Build.ArtifactStagingDirectory)/readers-0.1.0.tgz
+                    artifact: helm_readers_package
                     publishLocation: pipeline
 
                 - task: HelmDeploy@0
@@ -59,8 +59,8 @@ stages:
                     kubernetesServiceConnection: tf_sc_aks
                     command:                     upgrade
                     chartType:                   FilePath
-                    chartPath:                   $(Build.ArtifactStagingDirectory)/writers-0.1.0.tgz
+                    chartPath:                   $(Build.ArtifactStagingDirectory)/readers-0.1.0.tgz
                     chartVersion:                0.1.0
-                    releaseName:                 writers
-                    valueFile:                   helm/writers/values.yaml
+                    releaseName:                 readers
+                    valueFile:                   helm/readers/values.yaml
                     arguments:                   --install --create-namespace --timeout 30s
