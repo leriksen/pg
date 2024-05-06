@@ -6,7 +6,17 @@ spec:
   containers:
     - name: count-log-1
       image: busybox:1.28
-      args: [/bin/sh, -c, 'tail -n+1 -F /var/log/1.log']
+      args:
+        - /bin/sh
+        - -c
+        - >
+          i=0;
+          while true;
+          do
+            echo "$i: $(date)" >> /var/log/1.log;
+            i=$((i+1));
+            sleep 1;
+          done
       volumeMounts:
         - name: varlog
           mountPath: /var/log
