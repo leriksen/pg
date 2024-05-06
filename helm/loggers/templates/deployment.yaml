@@ -13,6 +13,7 @@ spec:
           i=0;
           while true;
           do
+            echo "$i: $(date)";
             echo "$i: $(date)" >> /var/log/1.log;
             i=$((i+1));
             sleep 1;
