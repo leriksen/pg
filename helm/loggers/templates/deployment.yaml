@@ -1,7 +1,7 @@
 kind: Pod
 apiVersion: v1
 metadata:
-  name: postgres-cli
+  name: loggers
 spec:
   containers:
     - name: count-log-1
