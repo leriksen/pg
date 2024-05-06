@@ -21,6 +21,12 @@ spec:
           value: "{{ default 5432 .Values.port }}"
         - name:  PGDATABASE
           value: {{ .Values.pgdatabase }}
+    - name: count-log-1
+      image: busybox:1.28
+      args: [/bin/sh, -c, 'tail -n+1 -F /var/log/1.log']
+      volumeMounts:
+        - name: varlog
+          mountPath: /var/log
   volumes:
     - name: secrets-store01-inline
       csi:
@@ -28,3 +34,5 @@ spec:
         readOnly: true
         volumeAttributes:
           secretProviderClass: {{ .Values.secretProviderClassName }}
+    - name: varlog
+      emptyDir: {}
