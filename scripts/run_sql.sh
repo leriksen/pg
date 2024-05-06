@@ -10,8 +10,7 @@ cd "${base_directory}"
 
 echo "reading file ${input} from ${base_directory}"
 
-while IFS= read -r line
-do
+while IFS= read -r line || [ -n "${line}" ]; do
   echo "$line"
 
   if [[ "${line}" =~ ^\s*# ]]; then
