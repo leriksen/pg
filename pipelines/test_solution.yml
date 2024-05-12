@@ -30,9 +30,9 @@ stages:
               script: |
                 set -euo pipefail
                 
-                ls -al
+                ls -al fixtures
                 
-                rc=$(scripts/run_sql.sh sql/ fixtures/secrets.json > test.out)
+                rc=$(scripts/run_sql.sh sql/manifest fixtures/secrets.json > test.out)
                 
                 if [[ "${rc}" -ne 0 ]]; then
                   echo "failed"                  

@@ -2,13 +2,9 @@
 
 set -euo pipefail
 
-input="manifest.txt"
+input="${1}"
 
-base_directory="${1}"
-
-cd "${base_directory}"
-
-echo "reading file ${input} from ${base_directory}"
+echo "reading file ${input}"
 
 secrets=$(jq -r 'to_entries|map("--\(.key)=\(.value|tostring)")| join(" ")' "${2}")
 
@@ -21,6 +17,13 @@ while IFS= read -r line || [ -n "${line}" ]; do
     echo "line is empty"
   else
     echo "process ${line}"
+
+    cat "${line}"
+    echo
+
+
     echo "psql --file ${line} ${secrets}"
   fi
 done < "$input"
+
+exit 0
