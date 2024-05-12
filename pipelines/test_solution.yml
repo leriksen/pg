@@ -26,9 +26,7 @@ stages:
               workingDirectory: $(System.DefaultWorkingDirectory)
               script: |
                 set -euo pipefail
-                
-                ls -al fixtures
-                
+                                
                 output=$(scripts/run_sql.sh sql/manifest.txt fixtures/secrets.json > test.out)
                 rc=$?
                 
@@ -38,8 +36,9 @@ stages:
                   echo "succeeded"
                 fi
                 
-                echo ${output}
-                ls
+                echo "_____________"
+                echo "script output"
+                echo "-------------"
                 cat test.out
                 
                 exit $rc
