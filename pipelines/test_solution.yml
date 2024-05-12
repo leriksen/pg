@@ -30,6 +30,8 @@ stages:
               script: |
                 set -euo pipefail
                 
+                ls -al
+                
                 rc=$(scripts/run_sql.sh sql/ fixtures/secrets.json > test.out)
                 
                 if [[ "${rc}" -ne 0 ]]; then
