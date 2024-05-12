@@ -6,7 +6,7 @@ input="${1}"
 
 echo "reading file ${input}"
 
-secrets=$(jq -r 'to_entries|map("--\(.key)=\(.value|tostring)")| join(" ")' "${2}")
+secrets=$(jq -r 'to_entries|map("--set \(.key)=\(.value|tostring)")| join(" ")' "${2}")
 
 while IFS= read -r line || [ -n "${line}" ]; do
   echo "$line"
