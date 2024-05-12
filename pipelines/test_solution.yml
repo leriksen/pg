@@ -29,7 +29,8 @@ stages:
                 
                 ls -al fixtures
                 
-                rc=$(scripts/run_sql.sh sql/manifest.txt fixtures/secrets.json > test.out)
+                output=$(scripts/run_sql.sh sql/manifest.txt fixtures/secrets.json > test.out)
+                rc=$?
                 
                 if [[ "${rc}" -ne 0 ]]; then
                   echo "failed"                  
@@ -37,6 +38,8 @@ stages:
                   echo "succeeded"
                 fi
                 
+                echo ${output}
+                ls
                 cat test.out
                 
-                exit($rc)
+                exit $rc
