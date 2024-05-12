@@ -1,0 +1,43 @@
+variables:
+  - group: devops-dev
+  - group: pg-dev
+
+pool:
+  vmImage: ubuntu-22.04
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+      - main
+  paths:
+    include:
+      - scripts/run_sql.sh
+      - sql/**/*
+stages:
+  - stage: Test
+    displayName: Test scripts and sql
+    jobs:
+      - job: Test
+        displayName: Test
+        steps:
+          - task: Bash@3
+            displayName: Test scripts and sql
+            inputs:
+              targetType: inline
+              workingDirectory: $(System.DefaultWorkingDirectory)
+              script: |
+                set -euo pipefail
+                
+                rc=$(scripts/run_sql.sh sql/ fixtures/secrets.json > test.out)
+                
+                if [[ "${rc}" -ne 0 ]]; then
+                  echo "failed"                  
+                else
+                  echo "succeeded"
+                fi
+                
+                cat test.out
+                
+                exit($rc)
