@@ -9,7 +9,8 @@ echo "reading file ${input}"
 secrets=$(jq -r 'to_entries|map("--set \(.key)=\(.value|tostring)")| join(" ")' "${2}")
 
 while IFS= read -r line || [ -n "${line}" ]; do
-  echo "$line"
+  cat "${line}"
+  echo
 
   if [[ "${line}" =~ ^\s*# ]]; then
     echo "line is a comment"
@@ -20,12 +21,9 @@ while IFS= read -r line || [ -n "${line}" ]; do
 
     psql --set dbname=personify -f "${line}"
   else
-    echo "process ${line}"
+    echo "line is a sql script, run with specified database"
 
-    cat "${line}"
-    echo
-
-    echo "psql --dbname personify --file ${line} ${secrets}"
+    psql --dbname personify --file "${line}" "${secrets}"
   fi
 done < "$input"
 
