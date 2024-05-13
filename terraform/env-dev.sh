@@ -5,6 +5,5 @@ export AZDO_ORG_SERVICE_URL="https://dev.azure.com/leiferiksenau"
 export AZDO_PERSONAL_ACCESS_TOKEN="$(cat .pat)"
 export PGPASSWORD=$(cat .pgpass)
 export PGUSER=psqladmin
-export PGHOST=i$(az postgres flexible-server list -g pg | jq -r '.[0].fullyQualifiedDomainName')
+export PGHOST=$(az postgres flexible-server list -g pg | jq -r '.[0].fullyQualifiedDomainName')
 export PGPORT=5432
-export PGDATABASE=db
