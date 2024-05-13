@@ -30,8 +30,3 @@ resource "azurerm_postgresql_flexible_server_firewall_rule" "all" {
   start_ip_address = "0.0.0.0"
   end_ip_address   = "255.255.255.255"
 }
-
-resource "azurerm_postgresql_flexible_server_database" "db" {
-  name      = "db"
-  server_id = azurerm_postgresql_flexible_server.pg.id
-}

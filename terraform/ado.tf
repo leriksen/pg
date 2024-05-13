@@ -44,9 +44,4 @@ resource "azuredevops_variable_group" "infra" {
     name = "pghost"
     value = azurerm_postgresql_flexible_server.pg.fqdn
   }
-
-  variable {
-    name = "pgdatabase"
-    value = azurerm_postgresql_flexible_server_database.db.name
-  }
 }
