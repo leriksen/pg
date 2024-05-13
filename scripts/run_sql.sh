@@ -15,14 +15,17 @@ while IFS= read -r line || [ -n "${line}" ]; do
     echo "line is a comment"
   elif [[ "${line}" =~ ^\s*$ ]]; then
     echo "line is empty"
+  elif [[ "${line}" =~ create_database ]]; then
+    echo "line is database create, run without -d"
+
+    psql --set dbname=personify -f "${line}"
   else
     echo "process ${line}"
 
     cat "${line}"
     echo
 
-
-    echo "psql --file ${line} ${secrets}"
+    echo "psql --dbname personify --file ${line} ${secrets}"
   fi
 done < "$input"
 
