@@ -2,13 +2,13 @@
 
 set -euo pipefail
 
-env
-
 input="${1}"
 
 echo "reading file ${input}"
 
 secrets=$(jq -r 'to_entries|map("--set=\(.key)=\(.value|tostring)")| join(" ")' "${2}")
+
+echo "${secrets}"
 
 while IFS= read -r line || [ -n "${line}" ]; do
   cat "${line}"
@@ -21,7 +21,7 @@ while IFS= read -r line || [ -n "${line}" ]; do
   elif [[ "${line}" =~ create_database ]]; then
     echo "line is database create, run without -d"
 
-    psql --dbname=template1 --set dbname=personify -f "${line}"
+    psql --dbname=template1 --file "${line}" "${secrets}"
   else
     echo "line is a sql script, run with specified database"
 
