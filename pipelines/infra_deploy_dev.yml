@@ -15,6 +15,7 @@ trigger:
       - pipelines/infra_deploy_dev.yml
       - terraform/**/*
       - modules/**/*
+      - scripts/terraform_*.sh
 
 stages:
   - template: ./templates/plan.yml
