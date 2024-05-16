@@ -5,15 +5,17 @@ variables:
 pool:
   vmImage: ubuntu-22.04
 
-trigger: none
-#  batch: true
-#  branches:
-#    include:
-#      - master
-#      - main
-#  paths:
-#    exclude:
-#      - pipelines/cluster_config.yml
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+      - main
+  paths:
+    include:
+      - pipelines/infra_deploy_dev.yml
+      - terraform/**/*
+      - modules/**/*
 
 stages:
   - template: ./templates/plan.yml

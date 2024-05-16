@@ -18,6 +18,16 @@ trigger:
       - sql/**/*
       - scripts/run_sql.sh
 
+
+resource:
+  pipelines:
+    - pipeline: infra_deploy
+      source: leriksen.terraform
+      trigger:
+        branches:
+          - master
+          - main
+
 stages:
   - stage: Build
     displayName: Build and push stage
