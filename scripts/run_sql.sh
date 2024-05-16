@@ -8,23 +8,13 @@ echo "reading file ${input}"
 
 secrets=$(jq -r 'to_entries|map("--set=\(.key)=\(.value|tostring)")| join(" ")' "${2}")
 
-echo "${secrets}"
-
 while IFS= read -r line || [ -n "${line}" ]; do
-  cat "${line}"
-  echo
-
-  if [[ "${line}" =~ ^\s*# ]]; then
-    echo "line is a comment"
-  elif [[ "${line}" =~ ^\s*$ ]]; then
-    echo "line is empty"
+  echo "${line}"
+  if [[ "${line}" =~ ^\s*# || "${line}" =~ ^\s*$ ]]; then
+    echo "skipping"
   elif [[ "${line}" =~ create_database ]]; then
-    echo "line is database create, run without -d"
-
     psql --dbname=template1 --file "${line}" "${secrets}"
   else
-    echo "line is a sql script, run with specified database"
-
     psql --dbname personify --file "${line}" "${secrets}"
   fi
 done < "$input"

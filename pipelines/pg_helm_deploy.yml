@@ -17,6 +17,15 @@ trigger:
       - pipelines/pg_helm_deploy.yml
       - helm/postgres/**/*
 
+resources:
+  pipelines:
+    - pipeline: drivers_deploy
+      source: leriksen.secrets_config
+      trigger:
+        branches:
+          - master
+          - main
+
 stages:
   - stage: deploy_helm
     displayName: Deploy Helm

@@ -18,7 +18,6 @@ trigger:
       - sql/**/*
       - scripts/run_sql.sh
 
-
 resources:
   pipelines:
     - pipeline: infra_deploy
