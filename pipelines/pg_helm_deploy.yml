@@ -82,7 +82,7 @@ stages:
                     overrideValues:              pguser=$(pguser),pgpassword=$(pgpassword),pghost=$(pghost)
 
                 - bash: |
-                    kubectl exec postgres-cli -c consumer -n dev -- cat /var.log/1.log
+                    kubectl exec postgres-cli -c consumer -n dev -- cat /var/log/1.log
     
                     exit 0
                   displayName: Confirm log
