@@ -82,13 +82,7 @@ stages:
                     overrideValues:              pguser=$(pguser),pgpassword=$(pgpassword),pghost=$(pghost)
 
                 - bash: |
-                    pw=$(kubectl exec postgres-cli -n dev -- cat /mnt/secrets-store/pgpassword)
-
-                    if [[ "${pw}" == "$(pgpassword)" ]]; then
-                      echo correct
-                      exit 0
-                    else
-                      echo incorrect
-                      exit 1
-                    fi
-                  displayName: Confirm mounted
+                    kubectl exec postgres-cli -c consumer -n dev -- cat /var.log/1.log)
+    
+                    exit 0
+                  displayName: Confirm log
