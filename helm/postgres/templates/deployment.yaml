@@ -6,7 +6,7 @@ spec:
   containers:
     - name:  postgres-cli
       image: acrleif01.azurecr.io/postgres:latest
-
+      command: ["uname"]
       volumeMounts:
         - name: secrets-store01-inline
           mountPath: "/mnt/secrets-store"
