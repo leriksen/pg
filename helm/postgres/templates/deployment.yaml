@@ -3,6 +3,7 @@ apiVersion: v1
 metadata:
   name: postgres-cli
 spec:
+  restartPolicy: OnFailure
   containers:
     - name:  postgres-cli
       image: acrleif01.azurecr.io/postgres:latest
