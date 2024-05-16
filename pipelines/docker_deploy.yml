@@ -19,7 +19,7 @@ trigger:
       - scripts/run_sql.sh
 
 
-resource:
+resources:
   pipelines:
     - pipeline: infra_deploy
       source: leriksen.terraform
