@@ -3,7 +3,8 @@ variables:
   - group: pg-dev
   - group: infra
 
-pool: ipam-devops
+pool:
+  vmImage: ubuntu-latest
 
 trigger:
   batch: true

@@ -2,7 +2,8 @@ variables:
   - group: devops-dev
   - group: pg-dev
 
-pool: ipam-devops
+pool:
+  vmImage: ubuntu-latest
 
 trigger:
   batch: true
