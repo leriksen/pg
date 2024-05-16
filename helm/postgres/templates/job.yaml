@@ -1,0 +1,51 @@
+kind: Job
+apiVersion: batch/v1
+metadata:
+  name: postgres-cli
+spec:
+  template:
+    metadata:
+      name: sql-runner
+    spec:
+      restartPolicy: Never
+      containers:
+      - name:  postgres-cli
+        image: acrleif01.azurecr.io/postgres:latest
+        livenessProbe:
+          exec:
+            command:
+              - echo
+              - "ok"
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          exec:
+            command:
+              - echo
+              - "ok"
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        volumeMounts:
+          - name: secrets-store01-inline
+            mountPath: "/mnt/secrets-store"
+            readOnly:  true
+          - name: varlog
+            mountPath: "/var/log"
+        env:
+          - name:  PGPASSWORD
+            value: {{ .Values.pgpassword }}
+          - name:  PGUSER
+            value: {{ .Values.pguser }}
+          - name:  PGHOST
+            value: {{ .Values.pghost }}
+          - name:  PGPORT
+            value: "{{ default 5432 .Values.port }}"
+    volumes:
+      - name: secrets-store01-inline
+        csi:
+          driver:   secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: {{ .Values.secretProviderClassName }}
+      - name: varlog
+        emptyDir: {}
