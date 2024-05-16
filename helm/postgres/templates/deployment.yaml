@@ -6,6 +6,7 @@ spec:
   containers:
     - name:  postgres-cli
       image: acrleif01.azurecr.io/postgres:latest
+
       volumeMounts:
         - name: secrets-store01-inline
           mountPath: "/mnt/secrets-store"
@@ -24,7 +25,7 @@ spec:
 
     - name: consumer
       image: busybox:1.28
-      args: [ /bin/sh, -c, 'tail -n+1 -F /var/log/1.log' ]
+      args: [ /bin/sh, -c, 'touch /var/log/1.log && tail -n+1 -F /var/log/1.log' ]
       volumeMounts:
         - name: varlog
           mountPath: /var/log
