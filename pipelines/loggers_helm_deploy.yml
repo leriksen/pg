@@ -3,8 +3,7 @@ variables:
   - group: pg-dev
   - group: infra
 
-pool:
-  vmImage: ubuntu-22.04
+pool: ipam-devops
 
 trigger:
   batch: true
