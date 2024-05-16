@@ -24,6 +24,12 @@ resources:
         branches:
           - master
           - main
+    - pipeline: docker_build
+      source: leriksen.docker
+      trigger:
+        branches:
+          - master
+          - main
 
 stages:
   - stage: deploy_helm
