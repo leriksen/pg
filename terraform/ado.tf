@@ -36,16 +36,17 @@ resource "azuredevops_pipeline_authorization" "aks" {
 }
 
 resource "azuredevops_variable_group" "infra" {
-  name       = "infra"
-  project_id = data.azuredevops_project.pg.id
+  name         = "infra"
+  project_id   = data.azuredevops_project.pg.id
   allow_access = true
 
   variable {
-    name = "pghost"
+    name  = "pghost"
     value = azurerm_postgresql_flexible_server.pg.fqdn
   }
   variable {
-    name = "umi"
-    value = azurerm_kubernetes_cluster.aks.key_vault_secrets_provider[0].secret_identity[0].object_id
+    name      = "umi"
+    value     = azurerm_kubernetes_cluster.aks.key_vault_secrets_provider[0].secret_identity[0].object_id
+    is_secret = true
   }
 }
