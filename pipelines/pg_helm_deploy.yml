@@ -1,6 +1,5 @@
 variables:
   - group: devops-dev
-  - group: pg-dev
   - group: infra
 
 pool:
