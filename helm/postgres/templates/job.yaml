@@ -33,7 +33,9 @@ spec:
             mountPath: "/var/log"
         env:
           - name:  PGPASSWORD
-            value: {{ .Values.pgpassword }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.pgpassword }}
           - name:  PGUSER
             value: {{ .Values.pguser }}
           - name:  PGHOST

@@ -15,7 +15,7 @@ trigger:
   paths:
     include:
       - pipelines/busybox_helm_deploy.yml
-      - helm/loggers/**/*
+      - helm/busybox/**/*
 
 stages:
   - stage: deploy_helm
