@@ -18,12 +18,6 @@ trigger:
 
 resources:
   pipelines:
-    - pipeline: drivers_deploy
-      source: leriksen.secrets_config
-      trigger:
-        branches:
-          - master
-          - main
     - pipeline: docker_build
       source: leriksen.docker
       trigger:
