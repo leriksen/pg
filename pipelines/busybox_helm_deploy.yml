@@ -64,3 +64,5 @@ stages:
                     releaseName:                 busybox
                     valueFile:                   helm/busybox/values.yaml
                     arguments:                   --install --create-namespace --timeout 30s
+                    # var in group is updated with actual umi, in the terraform pipeline
+                    overrideValues:              umi=$(umi)
