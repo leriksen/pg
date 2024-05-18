@@ -1,18 +1,18 @@
-#kind: Pod
-#apiVersion: v1
-#metadata:
-#  name: aks-key-vault-test
-#spec:
-#  containers:
-#    - name: busybox
-#      image: registry.k8s.io/e2e-test-images/busybox:1.29-1
-#      command:
-#        - "/bin/sleep"
-#        - "10000"
-#      volumeMounts:
-#        - name: secrets-store
-#          mountPath: "/mnt/secrets-store"
-#          readOnly: true
+kind: Pod
+apiVersion: v1
+metadata:
+  name: busybox
+spec:
+  containers:
+    - name: busybox
+      image: busybox
+      command:
+        - "/bin/sleep"
+        - "10000"
+      volumeMounts:
+        - name: secrets-store
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
 #      env:
 #        - name: PGUSER
 #          valueFrom:
@@ -24,10 +24,10 @@
 #            secretKeyRef:
 #              name: secret-store
 #              key: pgpassword
-#  volumes:
-#    - name: secrets-store
-#      csi:
-#        driver: secrets-store.csi.k8s.io
-#        readOnly: true
-#        volumeAttributes:
-#          secretProviderClass: {{ .Values.secretProviderClassName }}
+  volumes:
+    - name: secrets-store
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: {{ .Values.secretProviderClassName }}

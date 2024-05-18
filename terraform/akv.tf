@@ -8,6 +8,35 @@ resource "azurerm_key_vault" "kv" {
   enable_rbac_authorization = true
 }
 
+data "azurerm_monitor_diagnostic_categories" "kv" {
+  resource_id = azurerm_key_vault.kv.id
+}
+
+resource "azurerm_monitor_diagnostic_setting" "kvdiag" {
+  name               = "kvdiag"
+  target_resource_id = azurerm_key_vault.kv.id
+  storage_account_id = azurerm_storage_account.sa.id
+  metric {
+    category = "AllMetrics"
+    enabled  = true
+    retention_policy {
+      enabled = true
+      days = 30
+    }
+  }
+  dynamic "log" {
+    for_each = data.azurerm_monitor_diagnostic_categories.kv.logs
+    content {
+      category = log.value
+      enabled  = true
+      retention_policy {
+        enabled = true
+        days = 30
+      }
+    }
+  }
+}
+
 resource "azurerm_role_assignment" "pg_kv_writer" {
   principal_id         = data.azurerm_client_config.current.object_id
   scope                = azurerm_key_vault.kv.id
