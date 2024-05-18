@@ -6,7 +6,7 @@ resourceGroupName: "pg"
 
 keyVaultName: "leifpgkv"
 
-secretProviderClassName: "secret-provider-kv"
+secretProviderClassName: "secret-provider-kv-busybox"
 
 secrets:
   - pguser
