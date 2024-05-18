@@ -1,6 +1,6 @@
 variables:
   - group: devops-dev
-
+  - group: pg-dev
 pool:
   vmImage: ubuntu-latest
 

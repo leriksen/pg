@@ -13,8 +13,8 @@ resource "azurerm_postgresql_flexible_server" "pg" {
   location               = azurerm_resource_group.pg.location
   sku_name               = module.environment.pg_sku_name
   version                = module.global.pg_version
-  administrator_login    = var.pguser
-  administrator_password = var.pgpassword
+  administrator_login    = azurerm_key_vault_secret.pguser.value
+  administrator_password = azurerm_key_vault_secret.pgpassword.value
 }
 
 resource "azurerm_postgresql_flexible_server_firewall_rule" "azure" {
