@@ -23,7 +23,7 @@ resource "azurerm_monitor_diagnostic_setting" "kvdiag" {
   }
 
   dynamic "enabled_log" {
-    for_each = data.azurerm_monitor_diagnostic_categories.kv.log_category_types
+    for_each = lookup(data.azurerm_monitor_diagnostic_categories.kv, "log_category_types")
     content {
       category = enabled_log.value
     }
