@@ -31,17 +31,11 @@ spec:
             readOnly:  true
           - name: varlog
             mountPath: "/var/log"
-        env:
-          - name:  PGPASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.pgpassword }}
-          - name:  PGUSER
-            value: {{ .Values.pguser }}
-          - name:  PGHOST
-            value: {{ .Values.pghost }}
-          - name:  PGPORT
-            value: "{{ default 5432 .Values.port }}"
+        envFrom:
+          - secretRef:
+              name: {{ .Values.kubeSecretName }}
+          - configMapRef:
+              name: {{ .values.configMapName }}
       volumes:
         - name: secrets-store01-inline
           csi:

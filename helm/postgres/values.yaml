@@ -6,11 +6,11 @@ resourceGroupName: "pg"
 
 keyVaultName: "leifpgkv"
 
-secretProviderClassName: "secret-provider-kv"
+secretProviderClassName: "secret-provider-kv-postgres"
+configMapName:  postgres-configmap
+
+kubeSecretName: pg-secret
 
 secrets:
   - pguser
   - pgpassword
-
-
-port: "5432"
