@@ -16,6 +16,8 @@ spec:
       envFrom:
         - secretRef:
             name: {{ .Values.kubeSecretName }}
+        - configMapRef:
+            name: busybox-configmap
   volumes:
     - name: secrets-store
       csi:
