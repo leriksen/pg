@@ -16,23 +16,16 @@ resource "azurerm_monitor_diagnostic_setting" "kvdiag" {
   name               = "kvdiag"
   target_resource_id = azurerm_key_vault.kv.id
   storage_account_id = azurerm_storage_account.sa.id
+
   metric {
     category = "AllMetrics"
     enabled  = true
-    retention_policy {
-      enabled = true
-      days = 30
-    }
   }
-  dynamic "log" {
-    for_each = data.azurerm_monitor_diagnostic_categories.kv.logs
+
+  dynamic "enabled_log" {
+    for_each = data.azurerm_monitor_diagnostic_categories.kv.log_category_types
     content {
-      category = log.value
-      enabled  = true
-      retention_policy {
-        enabled = true
-        days = 30
-      }
+      category = enabled_log.value
     }
   }
 }
