@@ -8,6 +8,8 @@ keyVaultName: "leifpgkv"
 
 secretProviderClassName: "secret-provider-kv-busybox"
 
+kubeSecretName: pg-secret
+
 secrets:
   - pguser
   - pgpassword

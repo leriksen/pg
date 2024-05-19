@@ -13,17 +13,9 @@ spec:
         - name: secrets-store
           mountPath: "/mnt/secrets-store"
           readOnly: true
-#      env:
-#        - name: PGUSER
-#          valueFrom:
-#            secretKeyRef:
-#              name: secret-store
-#              key: pguser
-#        - name: PGPASSWORD
-#          valueFrom:
-#            secretKeyRef:
-#              name: secret-store
-#              key: pgpassword
+      envFrom:
+        - secretRef:
+            name: {{ .Values.kubeSecretName }}
   volumes:
     - name: secrets-store
       csi:
