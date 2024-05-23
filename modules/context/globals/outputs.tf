@@ -10,5 +10,5 @@ output location {
   value = "australiasoutheast"
 }
 output "pg_version" {
-  value = "12"
+  value = "15"
 }
