@@ -1,0 +1,7 @@
+docker/
+fixtures/
+helm/
+migrations/
+pipelines/
+scripts/
+sql/
