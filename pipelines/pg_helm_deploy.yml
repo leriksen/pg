@@ -73,7 +73,7 @@ stages:
                     valueFile:                   helm/postgres/values.yaml
                     arguments:                   --install --create-namespace --timeout 30s
                     # var in group is updated with actual host, in the terraform pipeline
-                    overrideValues:              pghost=$(pghost)
+                    overrideValues:              pghost=$(pghost),umi=$(umi)
 
 #                - bash: |
 #                    kubectl exec postgres-cli -c consumer -n dev -- cat /var/log/1.log

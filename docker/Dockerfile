@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-RUN apk --no-cache add postgresql-client bash jq
+RUN apk --no-cache add postgresql15-client bash jq
 
 COPY fixtures/secrets.json /mnt/secrets/secrets.json
 COPY scripts/run_sql.sh /scripts/
