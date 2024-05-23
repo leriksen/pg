@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: busybox-configmap
+  name: {{ .Values.configMapName }}
 data:
   dbname: personify
   PGPORT: "5432"

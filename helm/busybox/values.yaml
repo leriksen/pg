@@ -10,6 +10,8 @@ secretProviderClassName: "secret-provider-kv-busybox"
 
 kubeSecretName: pg-secret
 
+configMapName: busybox-configmap
+
 secrets:
   - pguser
   - pgpassword
