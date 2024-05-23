@@ -35,7 +35,7 @@ spec:
           - secretRef:
               name: {{ .Values.kubeSecretName }}
           - configMapRef:
-              name: {{ .values.configMapName }}
+              name: {{ .Values.configMapName }}
       volumes:
         - name: secrets-store01-inline
           csi:
