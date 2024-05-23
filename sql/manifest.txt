@@ -1,5 +1,5 @@
 sql/01_create_database.sql
-# sql/02_version.sql
-# sql/03_schema.sql
-# sql/04_tables.sql
-# sql/05_users.sql
+sql/02_version.sql
+sql/03_schema.sql
+sql/04_tables.sql
+sql/05_users.sql

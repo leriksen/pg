@@ -6,6 +6,8 @@ resource "azurerm_key_vault" "kv" {
   tenant_id                 = data.azurerm_client_config.current.tenant_id
   purge_protection_enabled  = false
   enable_rbac_authorization = true
+
+  soft_delete_retention_days = 7
 }
 
 data "azurerm_monitor_diagnostic_categories" "kv" {
