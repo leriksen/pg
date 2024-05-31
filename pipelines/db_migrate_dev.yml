@@ -1,3 +1,11 @@
+parameters:
+  - name: direction
+    default: up
+    displayName: Migration Direction
+    values:
+      - up
+      - down
+
 variables:
   - group: devops-dev
   - group: infra
