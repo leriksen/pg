@@ -46,3 +46,7 @@ stages:
                     version: $(node_version)
                     checkLatest: true
 
+                - task: Npm@1
+                  inputs:
+                    command: ci
+                    workingDir: node
