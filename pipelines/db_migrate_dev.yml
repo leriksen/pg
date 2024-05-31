@@ -7,8 +7,9 @@ parameters:
       - down
 
 variables:
-  - group: devops-dev
   - group: infra
+  - group: devops-dev
+  - group: pg-dev
 
 pool:
   vmImage: ubuntu-latest
@@ -58,3 +59,16 @@ stages:
                   inputs:
                     command: ci
                     workingDir: node
+
+                - task: Bash@3
+                  env:
+                    PG_USER:     $(pguser)
+                    PG_PASSWORD: $(pgpassword)
+                    PG_HOST:     $(pghost)
+                    PG_DATABASE: $(pgdatabase)
+                    PG_PORT:     5432
+                  inputs:
+                    targetType: inline
+                    workingDirectory: migrations
+                    script: |
+                      npx
