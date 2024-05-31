@@ -10,6 +10,10 @@ locals {
   pg_sku_name = {
     dev = "B_Standard_B1ms"
   }
+
+  node_version = {
+    dev = "22.x"
+  }
 }
 
 module "subscription" {

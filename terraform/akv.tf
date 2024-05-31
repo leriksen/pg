@@ -56,8 +56,8 @@ resource "azurerm_key_vault_secret" "pgpassword" {
   value        = var.pgpassword
 }
 
-resource "azurerm_role_assignment" "aks_kv_reader" {
-  principal_id         = azurerm_kubernetes_cluster.aks.key_vault_secrets_provider[0].secret_identity[0].object_id
-  scope                = azurerm_key_vault.kv.id
-  role_definition_name = "Key Vault Secrets User"
-}
+#resource "azurerm_role_assignment" "aks_kv_reader" {
+#  principal_id         = azurerm_kubernetes_cluster.aks.key_vault_secrets_provider[0].secret_identity[0].object_id
+#  scope                = azurerm_key_vault.kv.id
+#  role_definition_name = "Key Vault Secrets User"
+#}

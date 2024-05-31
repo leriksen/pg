@@ -1,0 +1,48 @@
+variables:
+  - group: devops-dev
+  - group: infra
+
+pool:
+  vmImage: ubuntu-latest
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+      - main
+  paths:
+    include:
+      - pipelines/db_migrate_dev.yml
+      - node/**/*
+      - migrations/**/*
+
+resources:
+  pipelines:
+    - pipeline: infra
+      source: infra_deploy_dev.yml
+      trigger:
+        branches:
+          - master
+          - main
+
+stages:
+  - stage: db_migrate
+    displayName: Migrate Database
+    jobs:
+      - deployment: db_migrate
+        displayName: Migrate DB
+        workspace:
+          clean: all
+        environment: $(environment)
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+
+                - task: UseNode@1
+                  inputs:
+                    version: $(node_version)
+                    checkLatest: true
+

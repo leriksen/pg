@@ -14,3 +14,7 @@ output "env_sub" {
 output "pg_sku_name" {
   value = local.pg_sku_name[var.environment]
 }
+
+output "node_version" {
+  value = local.node_version[var.environment]
+}
