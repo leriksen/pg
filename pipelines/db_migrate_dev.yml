@@ -37,7 +37,7 @@ resources:
 
 stages:
   - stage: db_migrate
-    displayName: Migrate Database
+    displayName: Migrate DB
     jobs:
       - deployment: db_migrate
         displayName: Migrate DB
@@ -61,6 +61,7 @@ stages:
                     workingDir: node
 
                 - task: Bash@3
+                  dispalyName: Migrate DB
                   env:
                     PG_USER:     $(pguser)
                     PG_PASSWORD: $(pgpassword)
@@ -71,4 +72,4 @@ stages:
                     targetType: inline
                     workingDirectory: migrations
                     script: |
-                      npx
+                      npx db-migrate ${{ parameters.direction }} --config database.json --dry-run --environment pg
