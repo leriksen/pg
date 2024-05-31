@@ -57,7 +57,7 @@ stages:
 
                 - task: Npm@1
                   inputs:
-                    command: ci
+                    command: install
                     workingDir: node
 
                 - task: Bash@3
@@ -72,4 +72,5 @@ stages:
                     targetType: inline
                     workingDirectory: migrations
                     script: |
+                      echo "npx db-migrate ${{ parameters.direction }} --config database.json --dry-run --environment pg"
                       npx db-migrate ${{ parameters.direction }} --config database.json --dry-run --environment pg
