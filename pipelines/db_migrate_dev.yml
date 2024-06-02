@@ -63,14 +63,15 @@ stages:
                 - task: Bash@3
                   displayName: Migrate DB
                   env:
-                    PGUSER:            $(pguser)
-                    PGPASSWORD:        $(pgpassword)
-                    PGHOST:            $(pghost)
-                    PGDATABASE:        $(pgdatabase)
-                    PGPORT:            5432
-                    DRY_RUN:           $(dry_run)
-                    MIGRATE_DIRECTION: $(migrate_direction)
-                    INIT_MIGRATE:      $(initial_migration)
+                    PGUSER:              $(pguser)
+                    PGPASSWORD:          $(pgpassword)
+                    PGHOST:              $(pghost)
+                    PGDATABASE:          $(pgdatabase)
+                    PGPORT:              5432
+                    DRY_RUN:             $(dry_run)
+                    MIGRATE_DIRECTION:   $(migrate_direction)
+                    INIT_MIGRATE:        $(initial_migration)
+                    PERSONIFY_READ_USER: env_password
                   inputs:
                     targetType: filePath
                     workingDirectory: scripts
