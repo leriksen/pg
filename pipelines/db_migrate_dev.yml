@@ -60,6 +60,8 @@ stages:
                     command: install
                     workingDir: node
 
+                - script: ls -al & ls -al scripts
+
                 - task: Bash@3
                   displayName: Migrate DB
                   env:
