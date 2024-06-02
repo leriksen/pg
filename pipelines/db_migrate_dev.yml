@@ -55,12 +55,15 @@ stages:
                     version: $(node_version)
                     checkLatest: true
 
-                - task: Npm@1
+                - task: Bash@3
+                  displayName: Install DB Migrate
                   inputs:
-                    command: install
-                    workingDir: node
+                    targetType: inline
+                    script: |
+                      npm install -g db-migrate
+                      npm install -g db-migrate-pg
 
-                - script: npx db-migrate --version
+                - script: db-migrate --version
 
                 - task: Bash@3
                   displayName: Migrate DB
