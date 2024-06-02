@@ -75,7 +75,7 @@ stages:
                     DRY_RUN:             $(dry_run)
                     MIGRATE_DIRECTION:   $(migrate_direction)
                     INIT_MIGRATE:        $(initial_migration)
-                    PERSONIFY_READ_USER: env_password
+                    PERSONIFY_READ_USER: $(personify_read_user)
                   inputs:
                     targetType: filePath
                     workingDirectory: scripts
