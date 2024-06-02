@@ -25,6 +25,7 @@ trigger:
       - pipelines/db_migrate_dev.yml
       - node/**/*
       - migrations/**/*
+      - scripts/migrate_sql.sh
 
 resources:
   pipelines:
