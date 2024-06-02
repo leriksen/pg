@@ -7,9 +7,6 @@
     "password": {
       "ENV": "PGPASSWORD"
     },
-    "database": {
-      "ENV": "PGDATABASE"
-    },
     "host": {
       "ENV": "PGHOST"
     },

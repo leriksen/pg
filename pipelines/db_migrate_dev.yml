@@ -63,14 +63,15 @@ stages:
                 - task: Bash@3
                   displayName: Migrate DB
                   env:
-                    PG_USER:     $(pguser)
-                    PG_PASSWORD: $(pgpassword)
-                    PG_HOST:     $(pghost)
-                    PG_DATABASE: $(pgdatabase)
-                    PG_PORT:     5432
+                    PGUSER:            $(pguser)
+                    PGPASSWORD:        $(pgpassword)
+                    PGHOST:            $(pghost)
+                    PGDATABASE:        $(pgdatabase)
+                    PGPORT:            5432
+                    DRY_RUN:           $(dry_run)
+                    MIGRATE_DIRECTION: $(migrate_direction)
+                    INIT_MIGRATE:      $(initial_migration)
                   inputs:
-                    targetType: inline
-                    workingDirectory: migrations
-                    script: |
-                      echo "npx db-migrate ${{ parameters.direction }} --config database.json --dry-run --environment pg"
-                      npx db-migrate ${{ parameters.direction }} --config database.json --dry-run --environment pg
+                    targetType: filePath
+                    workingDirectory: scripts
+                    filePath: migrate_sql.sh ../migrations
