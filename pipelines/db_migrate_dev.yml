@@ -60,7 +60,7 @@ stages:
                     command: install
                     workingDir: node
 
-                - script: ls -al & ls -al scripts
+                - script: npx db-migrate --version
 
                 - task: Bash@3
                   displayName: Migrate DB
