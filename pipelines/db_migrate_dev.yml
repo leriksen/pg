@@ -77,4 +77,6 @@ stages:
                   inputs:
                     targetType: filePath
                     workingDirectory: scripts
-                    filePath: migrate_sql.sh ../migrations
+                    filePath: scripts/migrate_sql.sh
+                    arguments: >
+                      ../migrations
