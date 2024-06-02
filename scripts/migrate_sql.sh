@@ -14,7 +14,7 @@ echo "moved to $(pwd)"
 if [[ "${INIT_MIGRATE:-false}" == "true" ]]; then
   # database-init.json has no db defined, as db:create has a bug,
   # where it doesn't use the name of the db in the json file to create it
-  db-migrate db:create "${PGDATABASE}" --env pg --config database_init.json "${DRY_RUN:-}"
+  db-migrate db:create "${PGDATABASE}" --env pg --config database-init.json "${DRY_RUN:-}"
 fi
 
 # in the absence of the `sponge` utility, this is the safest way to do IPE of the sqls with envsubst

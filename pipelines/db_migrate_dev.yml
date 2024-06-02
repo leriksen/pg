@@ -63,8 +63,6 @@ stages:
                       npm install -g db-migrate
                       npm install -g db-migrate-pg
 
-                - script: db-migrate --version
-
                 - task: Bash@3
                   displayName: Migrate DB
                   env:
