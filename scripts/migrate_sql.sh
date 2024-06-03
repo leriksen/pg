@@ -28,6 +28,12 @@ done
 
 db-migrate "${MIGRATE_DIRECTION:-up}" --config database.json --env pg "${DRY_RUN:-}" --verbose
 
+if [[ "${DROP_MIGRATE:-false}" == "true" ]] && [[ "${MIGRATE_DIRECTION:-up}" == "down" ]]; then
+  # commented out for now, maybe dropping should be manual, at least initially
+  # db-migrate db:drop "${PGDATABASE}" --env pg --config database-init.json "${DRY_RUN:-}"
+  echo "Dropping is manual, for now"
+fi
+
 cd "${current}"
 echo "returned to $(pwd)"
 
