@@ -1,5 +1,7 @@
 FROM node:alpine
 
+RUN apk add bash
+
 RUN npm install -g db-migrate db-migrate-pg
 
 COPY scripts/migrate_sql.sh /scripts/
