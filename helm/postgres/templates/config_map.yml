@@ -8,7 +8,6 @@ data:
   PGUSER:              {{ .Values.pguser              }}
   PGPASSWORD:          {{ .Values.pgpassword          }}
   PGPORT:              "5432"
-  DRY_RUN:             {{ .Values.dry_run             }}
   INITIAL_MIGRATION:   {{ .Values.initial_migration   }}
   MIGRATION_DIRECTION: {{ .Values.migration_direction }}
   PERSONIFY_READ_USER: {{ .Values.personify_read_user }}
