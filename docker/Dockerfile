@@ -1,9 +1,10 @@
-FROM alpine:latest
+FROM node:alpine
 
-RUN apk --no-cache add postgresql15-client bash jq
+RUN npm install -g db-migrate db-migrate-pg
 
-COPY fixtures/secrets.json /mnt/secrets/secrets.json
-COPY scripts/run_sql.sh /scripts/
-COPY sql/ /sql/
+COPY scripts/migrate_sql.sh /scripts/
+RUN chmod 755 /scripts/migrate_sql.sh
 
-ENTRYPOINT [ "/scripts/run_sql.sh", "/sql/manifest.txt", "/mnt/secrets/secrets.json", ">", "/var/log/1.log", "2>&1" ]
+COPY migrations/ /migrations/
+
+ENTRYPOINT [ "/scripts/migrate_sql.sh", "/migrations", ">", "/var/log/1.log", "2>&1" ]
