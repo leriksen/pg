@@ -7,3 +7,6 @@ export PGPASSWORD=$(cat .pgpass)
 export PGUSER=psqladmin
 export PGPORT=5432
 export PGHOST=$(az postgres flexible-server list -g pg | jq -r '.[0].fullyQualifiedDomainName')
+export MIGRATION_DIRECTION=up
+export INIT_MIGRATE=true
+export DRY_RUN=""
