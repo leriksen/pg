@@ -11,4 +11,4 @@ export PGSSLMODE=disable
 export MIGRATION_DIRECTION=up
 export INIT_MIGRATE=true
 export DRY_RUN=""
-export ADMIN_PASSWORD=example
+export PERSONIFY_READ_USER=example

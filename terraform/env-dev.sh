@@ -10,3 +10,4 @@ export PGHOST=$(az postgres flexible-server list -g pg | jq -r '.[0].fullyQualif
 export MIGRATION_DIRECTION=up
 export INIT_MIGRATE=true
 export DRY_RUN=""
+export PERSONIFY_READ_USER=example

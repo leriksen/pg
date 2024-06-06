@@ -7,4 +7,4 @@ export PGDATABASE=personify
 export INIT_MIGRATE=false
 export DRY_RUN=--dry-run
 export MIGRATE_DIRECTION=up
-
+export PERSONIFY_READ_USER=example
