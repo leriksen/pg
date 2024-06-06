@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+env
+
 current=$(pwd)
 
 echo "running db-migrate $(db-migrate --version)"

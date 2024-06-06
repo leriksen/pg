@@ -3,5 +3,12 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.configMapName }}
 data:
-  dbname: personify
-  PGPORT: "5432"
+  PGHOST:              {{ .Values.pghost              }}
+  PGDATABASE:          {{ .Values.pgdatabase          }}
+  PGUSER:              {{ .Values.pguser              }}
+  PGPASSWORD:          {{ .Values.pgpassword          }}
+  PGPORT:              "5432"
+  DRY_RUN:             {{ .Values.dry_run             }}
+  INITIAL_MIGRATION:   {{ .Values.initial_migration   }}
+  MIGRATION_DIRECTION: {{ .Values.migration_direction }}
+  PERSONIFY_READ_USER: {{ .Values.personify_read_user }}
