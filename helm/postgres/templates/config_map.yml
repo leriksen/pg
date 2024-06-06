@@ -3,11 +3,11 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.configMapName }}
 data:
-  PGHOST:              {{ .Values.pghost              }}
-  PGDATABASE:          {{ .Values.pgdatabase          }}
-  PGUSER:              {{ .Values.pguser              }}
-  PGPASSWORD:          {{ .Values.pgpassword          }}
+  PGHOST:              "{{ .Values.pghost              }}"
+  PGDATABASE:          "{{ .Values.pgdatabase          }}"
+  PGUSER:              "{{ .Values.pguser              }}"
+  PGPASSWORD:          "{{ .Values.pgpassword          }}"
   PGPORT:              "5432"
-  INITIAL_MIGRATION:   {{ .Values.initial_migration   }}
-  MIGRATION_DIRECTION: {{ .Values.migration_direction }}
-  PERSONIFY_READ_USER: {{ .Values.personify_read_user }}
+  INIT_MIGRATE:        "{{ .Values.initial_migration   }}"
+  MIGRATION_DIRECTION: "{{ .Values.migration_direction }}"
+  PERSONIFY_READ_USER: "{{ .Values.personify_read_user }}"
