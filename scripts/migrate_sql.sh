@@ -26,7 +26,7 @@ for sql in migrations/sqls/*.sql; do
   envsubst < "${original_file}" > "${tmpfile}" && mv "${tmpfile}" "${original_file}"
 done
 
-db-migrate "${MIGRATE_DIRECTION:-up}" --config database.json --env pg "${DRY_RUN:-}" --verbose
+db-migrate "${MIGRATE_DIRECTION:-up}" "${MIGRATE_OPTION:-}" --config database.json --env pg "${DRY_RUN:-}" --verbose
 
 if [[ "${DROP_MIGRATE:-false}" == "true" ]] && [[ "${MIGRATE_DIRECTION:-up}" == "down" ]]; then
   # commented out for now, maybe dropping should be manual, at least initially
