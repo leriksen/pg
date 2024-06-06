@@ -4,6 +4,8 @@ set -euo pipefail
 
 env
 
+ls -al
+
 current=$(pwd)
 
 echo "running db-migrate $(db-migrate --version)"
@@ -12,6 +14,8 @@ migrations_dir="${1}"
 
 cd "${migrations_dir}"
 echo "moved to $(pwd)"
+
+ls -al
 
 if [[ "${INIT_MIGRATE:-false}" == "true" ]]; then
   # database-init.json has no db defined, as db:create has a bug,

@@ -1,6 +1,6 @@
 FROM node:alpine
 
-RUN apk add bash
+RUN apk add bash envsubst
 
 RUN npm install -g db-migrate db-migrate-pg
 
