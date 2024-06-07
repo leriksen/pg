@@ -1,6 +1,8 @@
-FROM node:alpine
+FROM node:bullseye
 
-RUN apk add bash envsubst
+RUN apt-get update
+
+RUN apt-get -y install gettext-base
 
 RUN npm install -g db-migrate db-migrate-pg
 
